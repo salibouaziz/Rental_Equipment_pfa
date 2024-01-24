@@ -5,6 +5,8 @@ import authRouter from "./routes/auth.js";
 import usersRouter from "./routes/users.js";
 import productsRouter from "./routes/products.js";
 import categoryRouter from "./routes/categories.js";
+import rentalRouter from './routes/rental.js';
+import returnRoutes from './routes/return.js';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -41,7 +43,12 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/categories", categoryRouter);
+<<<<<<< HEAD
 
+=======
+app.use("/api/rental", rentalRouter);
+app.use('/api/returns', returnRoutes);
+>>>>>>> origin/master
 //middleware error handler
 app.use((err,req,res,next)=>{
   const errorStatus = err.status || 500;

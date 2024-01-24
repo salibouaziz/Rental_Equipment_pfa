@@ -8,11 +8,28 @@ const UserSchema = new mongoose.Schema({
   email:{
     type:String,
     required:true,
-    unique:true
+    unique:true,
+  },
+  img: {
+    type: String,
   },
   password: {
     type: String,
     required: true,
+  },
+  phoneNumber: {
+    type: String, 
+    required: true,
+    unique: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    required: true, // Adjust as per your requirement
+    default: "active" // Set a default value if needed
   },
   isAdmin:{
     type: Boolean,
