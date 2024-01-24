@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/checkuser/:id", verifyUser, (req,res,next)=>{
   res.send("hello user ,you are logged in and you can delete your account.");
 });
-router.get("/checkadmin/:id", verifyAdmin, (req,res,next)=>{
+router.get("/checkadmin", verifyAdmin, (req,res,next)=>{
   res.send("hello admin ,you are logged in and you can delete all accounts.");
 });*/
 
