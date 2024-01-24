@@ -6,28 +6,42 @@ import usersRouter from "./routes/users.js";
 import productsRouter from "./routes/products.js";
 import categoryRouter from "./routes/categories.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 dotenv.config();
-const connect = async () =>{
+
+const connect = async () => {
   try {
-    await mongoose.connect(process.env.MONGO);
-    console.log("connected to mongodb!")
+    await mongoose.connect(process.env.MONGO, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    console.log("Connected to MongoDB!");
   } catch (error) {
-    throw error;
+    console.error("MongoDB connection error:", error);
+    throw error; // Rethrow the error to propagate it to the caller
   }
 };
+
 mongoose.connection.on("disconnected", ()=>{
   console.log("mongo is disconnected!");
 });
-
+const corsOptions = {
+  origin: 'http://localhost:3001', // replace with your frontend URL
+  credentials: true, // allow credentials (cookies, headers)
+  optionsSuccessStatus: 204, // handle preflight OPTIONS requests
+};
 //middleWares
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/categories", categoryRouter);
+
 //middleware error handler
 app.use((err,req,res,next)=>{
   const errorStatus = err.status || 500;
@@ -39,7 +53,13 @@ app.use((err,req,res,next)=>{
     stack: err.stack
   });
 });
-app.listen(3001, () =>{
-  connect();
-  console.log("connected to backend!");
-});
+
+connect()
+  .then(() => {
+    app.listen(3002, () => {
+      console.log(`Server is running on port 3002`);
+    });
+  })
+  .catch((error) => {
+    console.error("Error starting server:", error);
+  });
