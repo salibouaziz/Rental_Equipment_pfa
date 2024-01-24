@@ -10,9 +10,7 @@ export const createProduct = async (req, res, next) => {
       description,
       category,
       image,
-      price,
       quantity,
-      bookedTimeSlots,
       rentPerHour,
       isAvailable,
     } = req.body;
@@ -27,9 +25,7 @@ export const createProduct = async (req, res, next) => {
       description,
       category,
       image,
-      price,
       quantity,
-      bookedTimeSlots,
       rentPerHour,
       isAvailable,
     });
@@ -64,14 +60,13 @@ export const updateProduct = async (req, res, next) => {
 export const deleteProduct = async (req, res, next) => {
   try {
     const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-
     if (!deletedProduct) {
       return res.status(404).json({ message: 'Product not found' });
     }
     // Remove product ID from the associated category
     const associatedCategory = await Category.findById(deletedProduct.category);
     if (associatedCategory) {
-      associatedCategory.products.pull(deletedProduct._id);
+      associatedCategory.products.pull(req.params.id); // Remove the product ID
       await associatedCategory.save();
     }
     res.status(200).json({ message: 'Product deleted successfully' });
@@ -79,6 +74,7 @@ export const deleteProduct = async (req, res, next) => {
     next(err);
   }
 };
+
 
 
 // Get a specific product by ID

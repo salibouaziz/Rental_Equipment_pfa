@@ -21,13 +21,7 @@ const ProductSchema = new mongoose.Schema({
     quantity: {
       type : Number , 
       required : true
-    },
-    bookedTimeSlots : [
-        {
-            from : {type : String , required : true},
-            to : {type : String , required : true}
-        }
-    ] , 
+    }, 
     rentPerHour : {
       type : Number , 
       required : true
