@@ -43,7 +43,6 @@ app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/rental", rentalRouter);
-
 //middleware error handler
 app.use((err,req,res,next)=>{
   const errorStatus = err.status || 500;
