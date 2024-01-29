@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const ProductSchema = new mongoose.Schema({
 
-    Title : {
+    Title: {
       type: String,
       required: true,
       unique: true,
@@ -14,9 +14,10 @@ const ProductSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',
       required: true,
+      unique:true,
     },
     image : {
-      type : String
+      type : [String],
     }, 
     quantity: {
       type : Number , 
@@ -26,9 +27,9 @@ const ProductSchema = new mongoose.Schema({
       type : Number , 
       required : true
     },
-    isAvailable: {
-      type: Boolean,
-      default: true
+    rentPerDay : {
+      type : Number , 
+      required : true
     },
 
 

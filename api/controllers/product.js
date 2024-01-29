@@ -12,12 +12,15 @@ export const createProduct = async (req, res, next) => {
       image,
       quantity,
       rentPerHour,
-      isAvailable,
+      rentPerDay,
     } = req.body;
     // Check if the specified category exists
     const existingCategory = await Category.findById(category);
     if (!existingCategory) {
       return next(createError(404, 'Category not found'));
+    }
+    if(!Title ||!description ||!category ||!quantity ||!rentPerHour ||!rentPerDay){
+      return next(createError(400, 'please fill in all fields'));
     }
 
     const newProduct = new Product({
@@ -27,7 +30,7 @@ export const createProduct = async (req, res, next) => {
       image,
       quantity,
       rentPerHour,
-      isAvailable,
+      rentPerDay,
     });
 
     await newProduct.save();
@@ -42,10 +45,16 @@ export const createProduct = async (req, res, next) => {
 // Update a product by ID
 export const updateProduct = async (req, res, next) => {
   try {
+     // Check if the 'category' field exists in the update data
+     if ('category' in req.body) {
+      return next(createError(400, "Cannot update the 'category' field"));
+    }
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },
-      { new: true }
+      { new: true,
+        runValidators: true,
+      }
     );
     if (!updatedProduct) {
       return next(createError(404, 'Product not found'));
@@ -92,7 +101,7 @@ export const getProductById = async (req, res, next) => {
 // Get all products
 export const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().sort("-createdAt");
     res.status(200).json(products);
   } catch (err) {
     next(err);

@@ -1,54 +1,88 @@
-// Import necessary models and libraries
 import Rental from '../models/Rental.js';
 import Product from '../models/Product.js';
 import createError from '../utils/error.js';
 
-// Create a new rental
 export const createRental = async (req, res, next) => {
   try {
-    const { product: productId, bookedTimeSlots} = req.body;
-    const { id: userId } = req.params; // Extract user ID from request parameters
-    // Check if the product exists
-    const product = await Product.findById(productId);
-    if (!product) {
-      return next(createError(404, 'Product not found'));
+    const { products } = req.body;
+    if (!products || !Array.isArray(products) || products.length === 0) {
+      return next(createError(400, "Please provide valid product information"));
     }
 
-    // Check if the quantity is sufficient
-    if (product.quantity <= 0 || !product.isAvailable) {
-      return next(createError(400, 'Product not available for rental'));
+    const userId = req.user._id;
+
+    const rentalProducts = [];
+
+    for (const product of products) {
+      const { productId, bookedTimeSlots } = product;
+
+      const existingProduct = await Product.findById(productId);
+      if (!existingProduct) {
+        return next(createError(404, `Product with ID ${productId} not found`));
+      }
+
+      // Check if the booked time is valid
+      const currentDate = new Date();
+      const bookedFromDate = new Date(bookedTimeSlots.from);
+      const bookedToDate = new Date(bookedTimeSlots.to);
+      if (bookedFromDate <= currentDate || bookedFromDate >= bookedToDate) {
+        return next(createError(400, 'Invalid booking date and time'));
+      }
+
+      // Check if the product is already booked for the specified time
+      if (existingProduct.quantity > 0) {
+        const isBooked = await Rental.exists({
+          'products': {
+            $elemMatch: {
+              'product': productId,
+              $or: [
+                { 
+                  'bookedTimeSlots.from': { $lt: bookedTimeSlots.to }, 
+                  'bookedTimeSlots.to': { $gt: bookedTimeSlots.from } 
+                },
+                {
+                  'bookedTimeSlots.from': { $gte: bookedTimeSlots.from, $lt: bookedTimeSlots.to },
+                },
+                {
+                  'bookedTimeSlots.to': { $gt: bookedTimeSlots.from, $lte: bookedTimeSlots.to },
+                }
+              ]
+            }
+          }
+        });
+
+        if (isBooked) {
+          return next(createError(400, `Product with ID ${productId} is already booked for the specified time`));
+        }
+      }
+      const totalHours = calculateTotalHours(bookedFromDate, bookedToDate);
+      let totalAmount;
+      if (totalHours <= 24) {
+        totalAmount = totalHours * existingProduct.rentPerHour;
+      } else {
+        const days = Math.ceil(totalHours / 24);
+        totalAmount = days * existingProduct.rentPerDay;
+      }
+
+      rentalProducts.push({
+        productId,
+        bookedTimeSlots,
+        totalHours,
+        totalAmount,
+        returned: false
+      });
+      if(existingProduct.quantity>0){
+        existingProduct.quantity--; // Decrement product quantity
+      }
+      await existingProduct.save();
     }
 
-    // Check if the booked time is valid
-    const currentDate = new Date();
-    const bookedFromDate = new Date(bookedTimeSlots.from);
-    if (bookedFromDate <= currentDate) {
-      return next(createError(400, 'Invalid booking date and time'));
-    }
-    // Calculate total hours
-    const totalHours = calculateTotalHours(bookedTimeSlots.from, bookedTimeSlots.to);
-
-    // Calculate total amount
-    const totalAmount = totalHours * product.rentPerHour;
-
-    // Create a new rental
     const newRental = new Rental({
-      product: productId,
-      user: userId,
-      bookedTimeSlots,
-      totalHours,
-      totalAmount,
+      products: rentalProducts,
+      user: userId
     });
 
     await newRental.save();
-
-    // Update product quantity and availability
-    product.quantity -= 1;
-    if (product.quantity === 0) {
-      product.isAvailable = false;
-    }
-
-    await product.save();
 
     res.status(201).json(newRental);
   } catch (err) {
@@ -56,10 +90,7 @@ export const createRental = async (req, res, next) => {
   }
 };
 
-// Helper function to calculate total hours
 const calculateTotalHours = (from, to) => {
-  const fromDate = new Date(from);
-  const toDate = new Date(to);
-  const timeDiff = toDate - fromDate;
+  const timeDiff = to - from;
   return timeDiff / (1000 * 60 * 60); // Convert milliseconds to hours
 };
