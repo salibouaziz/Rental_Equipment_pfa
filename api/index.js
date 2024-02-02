@@ -31,7 +31,7 @@ mongoose.connection.on("disconnected", ()=>{
   console.log("mongo is disconnected!");
 });
 const corsOptions = {
-  origin: 'http://localhost:3001', // replace with your frontend URL
+  origin: 'http://localhost:3000', // replace with your frontend URL
   credentials: true, // allow credentials (cookies, headers)
   optionsSuccessStatus: 204, // handle preflight OPTIONS requests
 };
@@ -43,12 +43,12 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/categories", categoryRouter);
-<<<<<<< HEAD
 
-=======
+
+
 app.use("/api/rental", rentalRouter);
 app.use('/api/returns', returnRoutes);
->>>>>>> origin/master
+
 //middleware error handler
 app.use((err,req,res,next)=>{
   const errorStatus = err.status || 500;
@@ -63,7 +63,7 @@ app.use((err,req,res,next)=>{
 
 connect()
   .then(() => {
-    app.listen(3002, () => {
+    app.listen(3001, () => {
       console.log(`Server is running on port 3002`);
     });
   })

@@ -10,13 +10,14 @@ const UserSchema = new mongoose.Schema({
     required:true,
     unique:true,
   },
-  img: {
-    type: String,
-  },
   password: {
     type: String,
     required: true,
   },
+  /*img: {
+    type: String,
+  },
+ 
   phoneNumber: {
     type: String, 
     required: true,
@@ -30,7 +31,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true, // Adjust as per your requirement
     default: "active" // Set a default value if needed
-  },
+  },*/
   isAdmin:{
     type: Boolean,
     default:false,
