@@ -24,8 +24,7 @@ export const register = async (req,res,next)=>{
   }
   //create new user
   const user = await User.create({
-    username,
-    email,
+    ...req.body,
     password
   });
   //Generate token
