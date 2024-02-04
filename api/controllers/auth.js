@@ -24,8 +24,7 @@ export const register = async (req,res,next)=>{
   }
   //create new user
   const user = await User.create({
-    username,
-    email,
+    ...req.body,
     password
   });
   //Generate token
@@ -81,6 +80,8 @@ export const logout = async (req, res, next) => {
     httpOnly:true,
     expires: new Date(0),
   });
+  res.cookie('access_token', token, { httpOnly: true, sameSite: 'None', secure: true });
+
   return res.status(200).json({message: "Successfully logged out!"});
 };
 
