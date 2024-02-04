@@ -6,7 +6,6 @@ import usersRouter from "./routes/users.js";
 import productsRouter from "./routes/products.js";
 import categoryRouter from "./routes/categories.js";
 import rentalRouter from './routes/rental.js';
-import returnRoutes from './routes/return.js';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
@@ -46,8 +45,11 @@ app.use("/api/categories", categoryRouter);
 
 
 
+
 app.use("/api/rental", rentalRouter);
-app.use('/api/returns', returnRoutes);
+
+
+
 
 //middleware error handler
 app.use((err,req,res,next)=>{
@@ -64,7 +66,11 @@ app.use((err,req,res,next)=>{
 connect()
   .then(() => {
     app.listen(3001, () => {
-      console.log(`Server is running on port 3002`);
+
+    
+
+      console.log(`Server is running on port 3001`);
+
     });
   })
   .catch((error) => {
