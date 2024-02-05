@@ -1,0 +1,21 @@
+import express from "express";
+import { deleteUser, getLoginStatus, getUser, getUsers, updatePhoto, updateUser } from "../controllers/user.js";
+import { protect, verifyAdmin,verifyUserAdmin } from "../utils/verifyToken.js";
+const router = express.Router();
+
+
+//update
+router.patch("/updateUser",protect,updateUser);
+//update photo
+router.patch("/updatePhoto",protect,updatePhoto);
+//delete
+router.delete("/deleteUser/:userid",protect,verifyUserAdmin,deleteUser);
+//get
+router.get("/getUser",protect, getUser);
+//get all
+router.get("/",protect,verifyAdmin,getUsers);
+//get login status
+router.get("/getLoginStatus",getLoginStatus);
+
+
+export default router;
