@@ -1,0 +1,66 @@
+/* Categories.css */
+
+.categories-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .categories-heading {
+    text-align: center;
+    font-size: 60px;
+    margin-bottom: 100px;
+    color: #333; /* Adjust color as needed */
+  }
+  
+  .categories-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .category-item {
+    width: 250px; /* Set a fixed width for each category item */
+    height: 250px; /* Set a fixed height for each category item */
+    border: 2px solid #000000; /* Adjust border color as needed */
+    border-radius: 10px;
+    transition: transform 0.2s;
+    overflow: hidden;
+    /* background: #fff; */ /* Remove or comment out this line */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced box shadow */
+  }
+  
+  .category-item:hover {
+    transform: translateY(-5px) scale(1.05); /* Slight lift and scale on hover */
+  }
+  
+  .category-image {
+    width: 100%;
+    height: 150px; /* Adjust the height as needed */
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .category-content {
+    padding: 20px;
+  }
+  
+  .category-name {
+    text-align: center;
+    font-size: 18px;
+    color: #333; /* Adjust text color as needed */
+  }
+  
+  /* Additional styling for a more vibrant look */
+  
+  .categories-container {
+    /* background-color: #f5f5f5; */ /* Remove or comment out this line */
+    padding: 20px;
+    border-radius: 15px;
+  }
+  
+  .categories-list {
+    margin-top: 20px;
+  }
+  

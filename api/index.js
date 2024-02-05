@@ -8,6 +8,7 @@ import categoryRouter from "./routes/categories.js";
 import rentalRouter from './routes/rental.js';
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from 'path';
 
 const app = express();
 dotenv.config();
@@ -43,7 +44,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/categories", categoryRouter);
 
-
+app.use('/images', express.static('images'));
 
 
 app.use("/api/rental", rentalRouter);
