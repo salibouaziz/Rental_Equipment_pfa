@@ -4,10 +4,13 @@ import createError from '../utils/error.js';
 // Create a new category
 export const createCategory = async (req, res, next) => {
   try {
-    const { name } = req.body;
+    const { name, image } = req.body;
     
     const newCategory = new Category({
       name,
+      image,
+
+      
     });
 
     await newCategory.save();

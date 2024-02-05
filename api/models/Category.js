@@ -6,6 +6,10 @@ const categorySchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  image : {
+    type : String,
+  }, 
+  
   products: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
