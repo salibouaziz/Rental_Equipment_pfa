@@ -10,6 +10,10 @@ const ProductSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    categoryName: { // Temporary field to store category name
+      type: String,
+      required: true,
+    },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',

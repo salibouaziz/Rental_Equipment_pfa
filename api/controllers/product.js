@@ -8,25 +8,26 @@ export const createProduct = async (req, res, next) => {
     const {
       Title,
       description,
-      category,
+      categoryName, // Adjusted to categoryName
       image,
       quantity,
       rentPerHour,
       rentPerDay,
     } = req.body;
     // Check if the specified category exists
-    const existingCategory = await Category.findById(category);
+    const existingCategory = await Category.findOne({name:categoryName});
     if (!existingCategory) {
       return next(createError(404, 'Category not found'));
     }
-    if(!Title ||!description ||!category ||!quantity ||!rentPerHour ||!rentPerDay){
+    if(!Title ||!description ||!categoryName ||!quantity ||!rentPerHour ||!rentPerDay){
       return next(createError(400, 'please fill in all fields'));
     }
 
     const newProduct = new Product({
       Title,
       description,
-      category,
+      categoryName,
+      category: existingCategory._id,
       image,
       quantity,
       rentPerHour,
