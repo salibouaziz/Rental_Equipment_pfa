@@ -11,7 +11,7 @@ router.patch("/updatePhoto",protect,updatePhoto);
 //delete
 router.delete("/deleteUser/:userid",protect,verifyUserAdmin,deleteUser);
 //get
-router.get("/getUser",protect, getUser);
+router.get("/getUser/:userid",protect, getUser);
 //get all
 router.get("/",protect,verifyAdmin,getUsers);
 //get login status

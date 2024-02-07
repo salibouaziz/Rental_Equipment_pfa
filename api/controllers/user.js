@@ -30,14 +30,20 @@ export const deleteUser = async (req,res,next)=>{
     next(err)
   }
 }
-export const getUser = async (req,res,next)=>{
-  const user = await User.findById(req.user._id).select("-password");
-  if(user){
-    res.status(200).json(user);
-  }else{
-   return next(createError(404, "User Not Found!")); 
+export const getUser = async (req, res, next) => {
+  try {
+    const userid = req.params.userid; // Get the user ID from request parameters
+    const user = await User.findById(userid).select("-password"); // Find the user by ID
+
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      return next(createError(404, "User Not Found!"));
+    }
+  } catch (err) {
+    next(err);
   }
-}
+};
 export const getUsers = async (req,res,next)=>{
   try {
     const users = await User.find();
