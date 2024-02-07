@@ -1,5 +1,5 @@
 import express from "express";
-import { deleteUser, getLoginStatus, getUser, getUsers, updatePhoto, updateUser } from "../controllers/user.js";
+import { deleteUser,getUser, getUsers, updatePhoto, updateUser } from "../controllers/user.js";
 import { protect, verifyAdmin,verifyUserAdmin } from "../utils/verifyToken.js";
 const router = express.Router();
 
@@ -14,8 +14,7 @@ router.delete("/deleteUser/:userid",protect,verifyUserAdmin,deleteUser);
 router.get("/getUser",protect, getUser);
 //get all
 router.get("/",protect,verifyAdmin,getUsers);
-//get login status
-router.get("/getLoginStatus",getLoginStatus);
+
 
 
 export default router;
