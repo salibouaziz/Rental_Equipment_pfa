@@ -24,13 +24,14 @@ export const nav = [
     path: "/contact",
   },
   {
-    text: "login",
-    path: "/login",
-  },
-  {
     text: "register",
     path: "/register",
   },
+  {
+    text: "login",
+    path: "/login",
+  },
+
 ]
 /*export const featured = [
   {

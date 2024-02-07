@@ -1,10 +1,10 @@
 // userColumns
 export const userColumns = [
-  { field: "_id", headerName: "ID", width: 70 },
+  { field: "_id", headerName: "ID", width: 230 },
   {
     field: "username",
     headerName: "Username",
-    width: 230,
+    width: 200,
     renderCell: (params) => (
       <div className="cellWithImg">
         <img
@@ -17,17 +17,17 @@ export const userColumns = [
   {
     field: "email",
     headerName: "Email",
-    width: 230,
+    width: 200,
   },
   {
     field: "phone",
     headerName: "Phone",
-    width: 100,
+    width: 180,
   },
   {
     field: "address",
     headerName: "Address",
-    width: 100,
+    width: 200,
   },
   
  
@@ -39,7 +39,7 @@ export const categoryColumns = [
   {
     field: "name",
     headerName: "Name",
-    width: 230,
+    width: 300,
     renderCell: (params) => (
       <div className="cellWithImg">
         <img

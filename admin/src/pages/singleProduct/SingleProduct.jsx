@@ -31,7 +31,7 @@ const Single = () => {
         <Navbar />
         <div className="top">
           <div className="left">
-           
+            <div className="editButton">Edit</div>
             <h1 className="title">Information</h1>
             {userData && (
               <div className="item">

@@ -2,6 +2,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import List from "./pages/list/List";
 import Single from "./pages/single/Single"
+import SingleCategory from "./pages/singleCategory/SingleCategory"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./style/dark.scss";
 import { useContext } from "react";
@@ -46,7 +47,7 @@ function App() {
             </Route>
             <Route path="categories">
               <Route index element={<ProtectedRoute><List columns={categoryColumns}/></ProtectedRoute>} />
-              <Route path=":categoryId" element={<ProtectedRoute><Single /></ProtectedRoute>} />
+              <Route path=":categoryId" element={<ProtectedRoute><SingleCategory /></ProtectedRoute>} />
               <Route
                 path="new"
                 element={<ProtectedRoute><NewCategory /></ProtectedRoute>}
