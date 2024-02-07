@@ -8,7 +8,7 @@ import { RESET_AUTH, login } from '../../../redux/features/auth/authSlice';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {isLoggedIn,isSuccess} = useSelector((state)=>state.auth);
+  const {isLoggedIn,isSuccess,user} = useSelector((state)=>state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loginUser = async(e) =>{
@@ -34,10 +34,14 @@ const Login = () => {
   };
   useEffect(()=>{
     if(isSuccess && isLoggedIn){
-      navigate("/");
+      if (user && user.isAdmin) { // Check if user is admin
+        navigate("/admin-dashboard"); // Navigate to admin dashboard if admin
+      } else {
+        navigate("/"); // Navigate to home if not admin
+      }
     }
     dispatch(RESET_AUTH());
-  },[isSuccess,isLoggedIn,dispatch,navigate]);
+  },[isSuccess,isLoggedIn,user,dispatch,navigate]);
 
   return (
   <div className="center">
