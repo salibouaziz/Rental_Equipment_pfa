@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../common/header/Header'
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import Login from '../auth/login/Login'
@@ -7,9 +7,15 @@ import Home from '../home/Home'
 import axios from 'axios'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useDispatch } from 'react-redux'
+import { getLoginStatus } from '../../redux/features/auth/authSlice'
 const Pages = () => {
   //we will add credentials to every Http request we make
   axios.defaults.withCredentials = true;
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getLoginStatus());
+  },[dispatch]);
   return (
     <>
     <Router>

@@ -50,6 +50,46 @@ export const login = createAsyncThunk(
     }
   }
 );
+//Logout User
+export const logout = createAsyncThunk(
+  //name_of_state/name_of_function
+  "auth/logout",
+  //initialize the function that will make a request to the backend
+  async (_,thunkAPI) =>{//_ : means we will not send any data 
+    try {
+      return await authService.logout();
+    } catch (error) {
+      //all the possible ways an API can return an error
+      const message = 
+      (error.response &&
+        error.response.data &&
+        error.response.data.message)||
+        error.message ||
+        error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+//getLoginStatus
+export const getLoginStatus = createAsyncThunk(
+  //name_of_state/name_of_function
+  "auth/getLoginStatus",
+  //initialize the function that will make a request to the backend
+  async (_,thunkAPI) =>{//_ : means we will not send any data 
+    try {
+      return await authService.getLoginStatus();
+    } catch (error) {
+      //all the possible ways an API can return an error
+      const message = 
+      (error.response &&
+        error.response.data &&
+        error.response.data.message)||
+        error.message ||
+        error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -113,6 +153,47 @@ const authSlice = createSlice({
       toast.error(action.payload, {
         position: "bottom-left"
       });
+    })
+    //Logout User
+    .addCase(logout.pending,(state) =>{
+      state.isLoading=true;
+    })
+    .addCase(logout.fulfilled,(state,action) =>{
+      state.isLoading=false;
+      state.isSuccess=true;
+      state.isLoggedIn=false;
+      state.user = null;
+      //throw a notification to the frontend that the login was successful
+      toast.success(action.payload, {
+        position: "bottom-left"
+      });
+    })
+    .addCase(logout.rejected,(state,action) =>{//the Http request was rejected
+      state.isLoading=false;
+      state.isError=true;
+      state.message=action.payload;//action.payload is the message we get from the server
+      state.user = null;
+      //throw a notification to the frontend that there is an error in the login 
+      toast.error(action.payload, {
+        position: "bottom-left"
+      });
+    })
+    //getLoginStatus
+    .addCase(getLoginStatus.pending,(state) =>{
+      state.isLoading=true;
+    })
+    .addCase(getLoginStatus.fulfilled,(state,action) =>{
+      state.isLoading=false;
+      state.isSuccess=true;
+      state.isLoggedIn=action.payload;
+      if(action.payload.message === "invalid signature"){
+        state.isLoggedIn=false;
+      }
+    })
+    .addCase(getLoginStatus.rejected,(state,action) =>{//the Http request was rejected
+      state.isLoading=false;
+      state.isError=true;
+      state.message=action.payload;//action.payload is the message we get from the server
     })
     
     

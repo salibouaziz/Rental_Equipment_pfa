@@ -1,10 +1,19 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { BsCart3 } from "react-icons/bs";
-import {nav} from "../../data/Data"
+import { Link, useNavigate } from 'react-router-dom'
+import { BsCart3 } from "react-icons/bs"
 import "./Header.css"
+import { useDispatch } from 'react-redux'
+import { RESET_AUTH, logout } from '../../../redux/features/auth/authSlice'
+import {ShowOnLogin, ShowOnLogout} from '../../hiddenLink/hiddenLink'
 const Header = () => {
-  const [navList, setNavList] = useState(false)
+  const [navList, setNavList] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutUser = async()=>{
+    await dispatch(logout());
+    await dispatch(RESET_AUTH());
+    navigate("/login");
+  }
   return (
     <>
     <header>
@@ -14,11 +23,19 @@ const Header = () => {
         </div>
         <div className='nav'>
           <ul className={navList ? "small": "flex"}>
-            {nav.map((list,index)=>(
-              <li key={index}>
-                <Link to={list.path}>{list.text}</Link>
-              </li>
-            ))}
+            <li><Link to="/">home</Link></li>
+            <li><Link to="/about">about</Link></li>
+            <li><Link to="/services">services</Link></li>
+            <li><Link to="/products">products</Link></li>
+            <li><Link to="/categories">categories</Link></li>
+            <li><Link to="/contact">contact</Link></li>
+            <ShowOnLogout>
+            <li><Link to="/register">register</Link></li>
+            <li><Link to="/login">login</Link></li>
+            </ShowOnLogout>
+            <ShowOnLogin>
+            <li><Link to="/" onClick={logoutUser}>Logout</Link></li>
+            </ShowOnLogin>
           </ul>
         </div>
         <div className='button flex'>
