@@ -54,6 +54,7 @@ app.use("/api/rental", rentalRouter);
 
 //middleware error handler
 app.use((err,req,res,next)=>{
+  console.error(err.stack);
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "something went wrong!";
   return res.status(errorStatus).json({
@@ -61,6 +62,7 @@ app.use((err,req,res,next)=>{
     status: errorStatus,
     messsage: errorMessage,
     stack: err.stack
+
   });
 });
 

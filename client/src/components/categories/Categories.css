@@ -29,6 +29,11 @@
     overflow: hidden;
     /* background: #fff; */ /* Remove or comment out this line */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced box shadow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
   
   .category-item:hover {
@@ -47,9 +52,10 @@
   }
   
   .category-name {
-    text-align: center;
+   
     font-size: 18px;
     color: #333; /* Adjust text color as needed */
+    margin-top: 10px; /* Add margin for better spacing */
   }
   
   /* Additional styling for a more vibrant look */

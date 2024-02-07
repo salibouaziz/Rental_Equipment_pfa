@@ -4,7 +4,8 @@ import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import Login from '../auth/login/Login'
 import Register from '../auth/register/Register'
 import Home from '../home/Home'
-import Categories from '../categories/Categories'
+import Categories from '../categories/Categories';
+
 import axios from 'axios'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'

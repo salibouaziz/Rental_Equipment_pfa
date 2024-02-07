@@ -107,4 +107,3 @@ export const getProducts = async (req, res, next) => {
     next(err);
   }
 };
-

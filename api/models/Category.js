@@ -4,11 +4,16 @@ const categorySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
+
   },
+
   image: {
     type: String, 
   },
+
+
+  
+
   products: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
