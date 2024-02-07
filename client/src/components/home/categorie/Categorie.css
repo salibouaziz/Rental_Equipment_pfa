@@ -1,0 +1,13 @@
+.categorie-background{
+  padding-top: 5%;
+  margin-left: 10px;
+}
+.categorie-background h1{
+  color: #313131;
+  font-size: 60px;
+}
+.categorie-background p{
+  color: #313131;
+  opacity: 0.9;
+  font-size: 20px;
+}

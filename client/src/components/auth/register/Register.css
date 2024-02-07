@@ -7,14 +7,14 @@
   transform: translate(-50%, -50%);
   max-width: 420px;
   width: 100%;
-  background: rgb(233, 233, 233);
+  background: rgba(235, 151, 17, 0.865);
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
 }
 .centerr h1 {
   text-align: center;
   padding: 20px 0;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid #fff;
 }
 .centerr form {
   padding: 0 40px;
@@ -22,7 +22,7 @@
 }
 form .txxt_field {
   position: relative;
-  border-bottom: 2px solid #adadad;
+  border-bottom: 2px solid #fff;
   margin: 30px 0;
 }
 .txxt_field input {
@@ -38,7 +38,7 @@ form .txxt_field {
   position: absolute;
   top: 50%;
   left: 5px;
-  color: #adadad;
+  color: #000;
   transform: translateY(-50%);
   font-size: 16px;
   pointer-events: none;
@@ -51,7 +51,7 @@ form .txxt_field {
   left: 0;
   width: 0%;
   height: 2px;
-  background: #00ffd5;
+  background: #ecb211e5;
   transition: 0.5s;
 }
 .txxt_field input:focus ~ label,

@@ -7,8 +7,13 @@ header {
   top: 0;
   z-index: 99999;
 }
-header img {
-  width: 200px;
+header .logo {
+  font-size: 40px;
+  text-transform: capitalize;
+}
+header .logo span{
+  font-size: 35px;
+  color: rgba(235, 151, 17, 0.865);
 }
 header a {
   margin-left: 30px;
