@@ -41,22 +41,22 @@ export const userInputs = [
 // productInputs
 export const productInputs = [
   {
-    id: "title",
+    id: "Title",
     label: "Title",
     type: "text",
     placeholder: "Enter the title",
   },
   {
-    id: "descreption",
+    id: "description",
     label: "Description",
     type: "text",
     placeholder: "Description",
   },
   {
-    id: "category",
-    label: "Category",
-    type: "text",  // Keep the type as "text"
-    placeholder: "Enter the category title",  // Update the placeholder accordingly
+    id: "categoryName",
+    label: "CategoryName",
+    type: "text",
+    placeholder: "Enter the category title",
   },
   {
     id: "quantity",
@@ -76,12 +76,6 @@ export const productInputs = [
     type: "number",
     placeholder: "Enter rent per day",
   },
-  //{
-    //id: "isAvailable",
-    //label: "Is Available",
-    ////type: "checkbox",  // Change the type to "checkbox"
-    //placeholder: "Available",
-  //},
 ];
 
 
