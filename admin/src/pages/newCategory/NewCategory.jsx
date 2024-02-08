@@ -11,32 +11,30 @@ const NewCategory = () => {
 
 
   const [file, setFile] = useState("");
-  const[info,setInfo] = useState({})
+  const [info, setInfo] = useState({});
+  const [showToast, setShowToast] = useState(false); // State to control the toast visibility
 
-  const handleChange = e =>{
-    setInfo(prev=>({...prev,[e.target.id]:e.target.value}));
+  const handleChange = (e) => {
+    setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
   const handleClick = async e =>{
     e.preventDefault()
     const data = new FormData()
     data.append("file",file)
     data.append("upload_preset","upload")
-  
     try{
       const uploadRes = await axios.post("https://api.cloudinary.com/v1_1/dk6jzdkfw/image/upload", data);
       const {url} = uploadRes.data
       const newCategory = {
         ...info,
-        image:url,
+        image: url,
       };
       await axios.post("/categories",newCategory)
-      navigate('/categories');
+
     }catch(err){
       console.log(err)
     }
-
   };
-  console.log(info)
 
   return (
     <div className="new">
@@ -74,13 +72,19 @@ const NewCategory = () => {
               {categoryInputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.id}</label>
-                  <input onChange={handleChange} type={input.type} placeholder={input.placeholder} 
-                  id={input.id}/>
+                  <input
+                    onChange={handleChange}
+                    type={input.type}
+                    placeholder={input.placeholder}
+                    id={input.id}
+                  />
                 </div>
               ))}
           
               <button onClick={handleClick}>Send</button>
             </form>
+            {/* Conditionally render the toast */}
+            {showToast && <div className="toast">Your category has been created</div>}
           </div>
         </div>
       </div>

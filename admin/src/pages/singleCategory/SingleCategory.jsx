@@ -86,6 +86,7 @@ const SingleCategory = () => {
             )}
             {editMode && (
               <div className="editForm">
+                Name:
                 <input
                   type="text"
                   name="name"
@@ -93,6 +94,7 @@ const SingleCategory = () => {
                   onChange={handleInputChange}
                   placeholder="Category Name"
                 />
+                Image:
                 <input
                   type="text"
                   name="image"

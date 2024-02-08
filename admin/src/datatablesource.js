@@ -77,8 +77,8 @@ export const productColumns = [
     width: 250,
   },
   {
-    field: "category",
-    headerName: "Category",
+    field: "categoryName",
+    headerName: "CategoryName",
     width: 250,
    
   },

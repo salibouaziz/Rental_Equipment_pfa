@@ -3,6 +3,7 @@ import Login from "./pages/login/Login";
 import List from "./pages/list/List";
 import Single from "./pages/single/Single"
 import SingleCategory from "./pages/singleCategory/SingleCategory"
+import SingleProduct from "./pages/singleProduct/SingleProduct"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./style/dark.scss";
 import { useContext } from "react";
@@ -39,7 +40,7 @@ function App() {
             </Route>
             <Route path="products">
               <Route index element={<ProtectedRoute><List columns={productColumns}/></ProtectedRoute>} />
-              <Route path=":productId" element={<ProtectedRoute><Single /></ProtectedRoute>} />
+              <Route path=":productId" element={<ProtectedRoute><SingleProduct /></ProtectedRoute>} />
               <Route
                 path="new"
                 element={<ProtectedRoute><NewEquipment /></ProtectedRoute>}

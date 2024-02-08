@@ -74,4 +74,37 @@
       }
     }
   }
+
+  // Add styles for the toast alert
+  .toast {
+    position: fixed;
+    top: 20px; // Adjust positioning as needed
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #06924e; // Green color
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 999;
+    animation: slideIn 0.5s ease forwards, fadeOut 2s ease forwards 1.5s;
+  }
+
+  @keyframes slideIn {
+    from {
+      top: -100px; // Adjust initial position
+    }
+    to {
+      top: 20px; // Adjust final position
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 }
