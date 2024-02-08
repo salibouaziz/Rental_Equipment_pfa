@@ -4,6 +4,7 @@ import createError from '../utils/error.js';
 
 // Create a new product
 export const createProduct = async (req, res, next) => {
+  console.log('Request Body:', req.body);
   try {
     const {
       Title,

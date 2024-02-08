@@ -5,12 +5,14 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState, useEffect } from "react";
 import { productInputs } from "../../formSource";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+
 const NewEquipment = () => {
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const [info, setInfo] = useState({});
   const [categories, setCategories] = useState([]);
-  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [showToast, setShowToast] = useState(false); // State to control the toast visibility
+
   useEffect(() => {
     // Fetch the list of categories when the component mounts
     const fetchCategories = async () => {
@@ -26,51 +28,47 @@ const NewEquipment = () => {
   }, []);
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    console.log(`id: ${id}, value: ${value}`);
-    setInfo((prev) => ({
-      ...prev,
-      [id === 'descreption' ? 'description' : id]: value,
-
-    
-      category: id === "category" ? value : prev.category,
-    }));
+    setInfo({ ...info, [e.target.id]: e.target.value });
   };
-  const handleClick = async (e) => {
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Final Info before API call:", info);
+
     const data = new FormData();
     data.append("file", file);
     data.append("upload_preset", "upload");
-  
+
     try {
       const uploadRes = await axios.post(
         "https://api.cloudinary.com/v1_1/dk6jzdkfw/image/upload",
         data
       );
-  
+
       const { url } = uploadRes.data;
-  
+
       const newEquipment = {
         ...info,
-        image: url,
+        image: [url],
       };
-  
-      console.log("New Equipment:", newEquipment); // Log the data
-  
-      const response = await axios.post("/products", {
-        ...newEquipment,
-        category: info.categoryId,
-      });      console.log("Server Response:", response.data);
-      console.log("Product successfully added!");
-      navigate('/products');
+
+      await axios.post("/products", newEquipment);
+      // Clear form fields after successful submission
+      setInfo({});
+      setFile(null);
+      setError(null);
+      setShowToast(true); // Show toast
+      setTimeout(() => {
+        setShowToast(false); // Hide toast after 2.5 seconds
+        window.location.href = "/products"; // Redirect to /products after toast fades out
+      }, 2500);
     } catch (err) {
-      console.error("Error adding product:", err);
+      setError(err.response.data.message);
     }
   };
-  
-
-  console.log(info);
 
   return (
     <div className="new">
@@ -92,7 +90,7 @@ const NewEquipment = () => {
             />
           </div>
           <div className="right">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -100,26 +98,29 @@ const NewEquipment = () => {
                 <input
                   type="file"
                   id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
+                  onChange={handleFileChange}
                   style={{ display: "none" }}
                 />
               </div>
 
               {productInputs.map((input) => (
                 <div className="formInput" key={input.id}>
-                  <label>{input.id}</label>
-                  {input.id === "category" ? (
-                    <select id="category" onChange={handleChange} value={info.category || ""}>
-                    <option value="" disabled>
-                      Select Category
-                    </option>
-                    {categories.map((category) => (
-                      <option key={category._id} value={category._id}>
-                        {category.name}
+                  <label htmlFor={input.id}>{input.label}</label>
+                  {input.id === "categoryName" ? (
+                    <select
+                      id={input.id}
+                      onChange={handleChange}
+                      defaultValue=""
+                    >
+                      <option value="" disabled>
+                        Select Category
                       </option>
-                    ))}
-                  </select>
-                  
+                      {categories.map((category) => (
+                        <option key={category._id} value={category.name}>
+                          {category.name}
+                        </option>
+                      ))}
+                    </select>
                   ) : (
                     <input
                       onChange={handleChange}
@@ -130,8 +131,11 @@ const NewEquipment = () => {
                   )}
                 </div>
               ))}
-              <button onClick={handleClick}>Send</button>
+              {error && <div className="error">{error}</div>}
+              <button type="submit">Send</button>
             </form>
+            {/* Conditionally render the toast */}
+            {showToast && <div className="toast">Your equipment has been created</div>}
           </div>
         </div>
       </div>
