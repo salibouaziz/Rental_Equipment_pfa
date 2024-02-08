@@ -5,11 +5,8 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState } from "react";
 import { categoryInputs } from "../../formSource";
 import axios from "axios";
-import {  useNavigate } from 'react-router-dom';
+
 const NewCategory = () => {
-  const navigate = useNavigate();
-
-
   const [file, setFile] = useState("");
   const [info, setInfo] = useState({});
   const [showToast, setShowToast] = useState(false); // State to control the toast visibility
@@ -17,22 +14,29 @@ const NewCategory = () => {
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
-  const handleClick = async e =>{
-    e.preventDefault()
-    const data = new FormData()
-    data.append("file",file)
-    data.append("upload_preset","upload")
-    try{
-      const uploadRes = await axios.post("https://api.cloudinary.com/v1_1/dk6jzdkfw/image/upload", data);
-      const {url} = uploadRes.data
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "upload");
+    try {
+      const uploadRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/dk6jzdkfw/image/upload",
+        data
+      );
+      const { url } = uploadRes.data;
       const newCategory = {
         ...info,
         image: url,
       };
-      await axios.post("/categories",newCategory)
-
-    }catch(err){
-      console.log(err)
+      await axios.post("/categories", newCategory);
+      setShowToast(true); // Show toast
+      setTimeout(() => {
+        window.location.href = "/categories"; // Redirect to /categories after toast fades out
+      }, 2500);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -80,7 +84,6 @@ const NewCategory = () => {
                   />
                 </div>
               ))}
-          
               <button onClick={handleClick}>Send</button>
             </form>
             {/* Conditionally render the toast */}
