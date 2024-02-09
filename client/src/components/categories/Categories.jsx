@@ -1,6 +1,7 @@
 import React from 'react'
 import  { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './Categories.css'; 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -22,6 +23,8 @@ const Categories = () => {
       <ul className="categories-list">
         {categories.map((category) => (
           <li key={category._id} className="category-item">
+                        <Link to={`/products/byCategory/${category._id}`} className="category-link">
+
             <div className="category-details">
               {category.image && (
                 <img
@@ -32,6 +35,7 @@ const Categories = () => {
               )}
               <strong className="category-name">{category.name}</strong>
             </div>
+            </Link>
           </li>
         ))}
       </ul>

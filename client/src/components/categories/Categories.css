@@ -8,6 +8,7 @@
   .categories-heading {
     text-align: center;
     font-size: 60px;
+    margin-top: 50px;
     margin-bottom: 100px;
     color: #333; /* Adjust color as needed */
   }
@@ -23,7 +24,7 @@
   .category-item {
     width: 250px; /* Set a fixed width for each category item */
     height: 250px; /* Set a fixed height for each category item */
-    border: 2px solid #000000; /* Adjust border color as needed */
+    border: 1px solid #ccc; /* Adjust border color as needed */
     border-radius: 10px;
     transition: transform 0.2s;
     overflow: hidden;
@@ -62,11 +63,15 @@
   
   .categories-container {
     /* background-color: #f5f5f5; */ /* Remove or comment out this line */
-    padding: 20px;
-    border-radius: 15px;
+    max-width: 1000px;
+    margin: 0 auto;
   }
   
   .categories-list {
-    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
   }
   

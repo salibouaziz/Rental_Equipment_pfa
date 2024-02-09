@@ -107,5 +107,16 @@ export const getProducts = async (req, res, next) => {
     res.status(200).json(products);
   } catch (err) {
     next(err);
-  }
+  }};
+  export const getProductsByCategoryId = async (req, res, next) => {
+    try {
+      const categoryId = req.params.categoryId;
+  
+      // Find products that belong to the specified category
+      const products = await Product.find({ category: categoryId });
+  
+      res.status(200).json(products);
+    } catch (err) {
+      next(err);
+    }
 };

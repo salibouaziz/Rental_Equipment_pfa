@@ -5,6 +5,7 @@ import {
   getProductById,
   updateProduct,
   deleteProduct,
+  getProductsByCategoryId,
 } from '../controllers/product.js';
 import { protect, verifyAdmin } from '../utils/verifyToken.js';
 
@@ -20,6 +21,8 @@ router.delete('/:id', protect, verifyAdmin, deleteProduct);
 router.get('/:id', getProductById);
 // Get all products
 router.get('/', getProducts);
+router.get('/byCategory/:categoryId', getProductsByCategoryId); // Add this route
+
 
 export default router;
 

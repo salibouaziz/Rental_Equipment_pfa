@@ -1,0 +1,98 @@
+/* ViewProduct.css */
+.product-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .product-heading {
+    text-align: center;
+    font-size: 75px;
+margin-top: 50px;
+    margin-bottom: 100px;
+    color: #333; /* Adjust color as needed */
+  }
+  .product-image {
+    max-width: 50%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-details {
+    flex: 1;
+    padding: 0 80px;
+  }
+  
+  .product-title {
+    font-size: 37px;
+    margin-bottom: 20px;
+  }
+  
+  .product-info {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .product-info1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color:  rgba(235, 151, 17, 0.865);
+  }
+  
+  .product-info:first-child {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Add more styles as needed */
+  .product-info {
+    margin-top: 10px;
+  }
+  
+  .product-info a {
+    color:rgba(235, 151, 17, 0.865);
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+  }
+  
+  .product-info a:hover {
+    text-decoration: none;
+  }
+  
+  .product-info a::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 0;
+    background-color:rgba(235, 151, 17, 0.865);
+    position: absolute;
+    bottom: -2px;
+    transition: width 0.3s ease; /* Adjust the transition speed as needed */
+  }
+  
+  .product-info a:hover::after {
+    width: 100%;
+  }
+  /* Add this to your existing CSS or create a new CSS file */
+.rent-button {
+    padding: 10px 20px;
+    background-color: rgba(235, 151, 17, 0.865);
+    color: #000000; /* Adjust text color as needed */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Remove default link underline */
+    display: inline-block;
+    margin-top: 20px;
+  
+  }
+  
+  .rent-button:hover {
+    background-color: #000000; /* Adjust hover color as needed */
+    color: #fff;
+  }
+  
