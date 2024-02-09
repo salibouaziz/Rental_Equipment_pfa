@@ -31,7 +31,7 @@ mongoose.connection.on("disconnected", ()=>{
   console.log("mongo is disconnected!");
 });
 const corsOptions = {
-  origin: 'http://localhost:3000', // replace with your frontend URL
+  origin: ['http://localhost:3000', 'http://localhost:3002'] , // replace with your frontend URL
   credentials: true, // allow credentials (cookies, headers)
   optionsSuccessStatus: 204, // handle preflight OPTIONS requests
 };
