@@ -6,7 +6,8 @@ import User from '../models/User.js';
 // CREATE A NEW RENTAL
 export const createRental = async (req, res, next) => {
   try {
-    const {productId,bookedTimeSlots } = req.body;
+    const {bookedTimeSlots } = req.body;
+    const productId = req.params.productid;
     if(!bookedTimeSlots){
       return next(createError(400, "Please fill in all required fields"));
     };
@@ -89,4 +90,26 @@ const calculateTotalHours = (from, to) => {
   const toDate = new Date(to);
   const timeDiff = toDate - fromDate;
   return timeDiff / (1000 * 60 * 60); // Convert milliseconds to hours
+};
+// GET A RENTAL BY ID
+export const getRentalById = async (req, res, next) => {
+  try {
+    const rentalId = req.params.rentalid;
+    const rental = await Rental.findById(rentalId);
+    if (!rental) {
+      return next(createError(404, 'Rental not found'));
+    }
+    res.status(200).json(rental);
+  } catch (err) {
+    next(err);
+  }
+};
+// GET ALL RENTALS
+export const getAllRentals = async (req, res, next) => {
+  try {
+    const rentals = await Rental.find();
+    res.status(200).json(rentals);
+  } catch (err) {
+    next(err);
+  }
 };
