@@ -35,7 +35,7 @@ const Login = () => {
   useEffect(()=>{
     if(isSuccess && isLoggedIn){
       if (user && user.isAdmin) { // Check if user is admin
-        navigate("/admin-dashboard"); // Navigate to admin dashboard if admin
+        window.location.href = 'http://localhost:3002/admin-panel';
       } else {
         navigate("/"); // Navigate to home if not admin
       }

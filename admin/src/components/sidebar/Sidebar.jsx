@@ -17,6 +17,13 @@ import { useContext } from "react";
 
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
+  const handleLogout = () => {
+    // Any logout logic you might have
+
+    // Redirect to the login page on a different port
+    window.location.href = 'http://localhost:3000';
+  };
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -88,7 +95,10 @@ const Sidebar = () => {
           </li>
           <li>
             <ExitToAppIcon className="icon" />
-            <span>Logout</span>
+           
+
+            <span onClick={handleLogout}>Logout</span>
+          
           </li>
         </ul>
       </div>

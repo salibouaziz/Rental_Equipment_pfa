@@ -1,5 +1,5 @@
 import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
+
 import List from "./pages/list/List";
 import Single from "./pages/single/Single"
 import SingleCategory from "./pages/singleCategory/SingleCategory"
@@ -28,7 +28,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-           <Route path="login" element={<Login />} />
+        
             <Route path="/admin-panel" 
               index 
               element={<ProtectedRoute><Home /></ProtectedRoute>} />
