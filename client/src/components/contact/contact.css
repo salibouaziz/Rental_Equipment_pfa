@@ -1,0 +1,55 @@
+.contact form {
+    padding: 30px;
+  }
+  
+  .contact form div {
+    display: flex;
+    flex-wrap: wrap; /* Added to wrap items in smaller screens */
+  }
+  
+  .contact input[type="text"],
+  .contact textarea {
+    width: calc(50% - 5px); /* Adjusted width for inputs */
+    margin-bottom: 20px;
+  }
+  
+  .contact input[type="text"] {
+    margin-right: 10px;
+  }
+  
+  .contact textarea {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width: 100%; /* Full width for textarea */
+  }
+  
+  .contact button {
+    border-radius: 5px;
+    padding: 15px 30px;
+    background-color: rgba(235, 151, 17, 0.865);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .contact h4 {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+  
+    .contact form div {
+      flex-direction: column;
+    }
+  
+    .contact input[type="text"],
+    .contact textarea {
+      width: 100%; /* Full width for inputs and textarea on smaller screens */
+    }
+  
+    .contact input[type="text"] {
+      margin-right: 0; /* No margin right for input on smaller screens */
+    }
+  }
+  

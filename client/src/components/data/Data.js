@@ -310,7 +310,7 @@ export const price = [
       },
     ],
   },
-]
+]*/
 export const footer = [
   {
     title: "LAYOUTS",
@@ -324,4 +324,4 @@ export const footer = [
     title: "COMPANY",
     text: [{ list: "About" }, { list: "Blog" }, { list: "Pricing" }, { list: "Affiliate" }, { list: "Login" }, { list: "Changelog" }],
   },
-]*/
+]
