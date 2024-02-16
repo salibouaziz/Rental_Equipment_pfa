@@ -56,7 +56,7 @@ export const createRental = async (req, res, next) => {
     const totalHours = calculateTotalHours(bookedTimeSlots.from, bookedTimeSlots.to);
     // Calculate total amount based on rental rates
     let totalAmount;
-    if (totalHours <= 24) {
+    if (totalHours < 24) {
       totalAmount = totalHours * product.rentPerHour;
     } else {
       const days = Math.ceil(totalHours / 24);
