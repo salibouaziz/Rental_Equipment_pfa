@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { toast } from "react-toastify";
 import {useSelector } from 'react-redux';
 import { useParams ,Link, useNavigate} from 'react-router-dom';
+import moment from 'moment';
 import './ViewProduct.css'; 
 const ViewProduct = () => {
   const { id } = useParams();
@@ -37,14 +38,13 @@ const ViewProduct = () => {
           position: "bottom-left"
       });
       }
-      // Format dates to ISO 8601 format
-      const fromISO = startDate.toISOString();
-      const toISO = endDate.toISOString();
-  
+      const startDateInLocalTimezone = moment(startDate).format(); // Convert start date to local timezone
+      const endDateInLocalTimezone = moment(endDate).format(); // Convert end date to local timezone
+
       const response = await axios.post(`http://localhost:3001/api/rental/${product._id}`, {
         bookedTimeSlots: {
-          from: fromISO,
-          to: toISO
+          from: startDateInLocalTimezone,
+          to: endDateInLocalTimezone,
         }
       });
   
