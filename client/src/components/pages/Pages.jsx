@@ -18,6 +18,8 @@ import { getLoginStatus } from '../../redux/features/auth/authSlice';
 import About from "../about/About";
 import Services from "../services/Services";
 import Contact from "../contact/Contact";
+import Cart from "../cart/Cart";
+import Rental from '../rental/Rental';
 
 const Pages = () => {
   // We will add credentials to every HTTP request we make
@@ -44,6 +46,10 @@ const Pages = () => {
           <Route path="/viewproduct/:id" element={<ViewProduct />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/rental/:rentid' element={<Rental />} />
+          <Route path='/cart' element={<Cart />} />
+
+
         </Routes>
         <Footer />
       </>
