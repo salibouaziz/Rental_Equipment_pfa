@@ -53,6 +53,7 @@ const ViewProduct = () => {
         toast.success('Rental created successfully', {
             position: "bottom-left"
         });
+        navigate(`/rental/${response.data._id}`);
       } else {
         toast.error(response.data.message, {
             position: "bottom-left"

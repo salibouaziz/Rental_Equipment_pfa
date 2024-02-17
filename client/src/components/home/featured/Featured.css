@@ -5,10 +5,9 @@
     padding: 30px;
     cursor: pointer;
   }
-  
-  .featured img {
-    width: 65px;
-    height: 65px;
-    margin: auto;
-  }
-  
+
+.featured img {
+  width: 65px;
+  height: 65px;
+  margin: auto;
+}
