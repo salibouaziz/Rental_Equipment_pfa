@@ -13,6 +13,7 @@ const SingleCategory = () => {
   const [categoryData, setCategoryData] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editedCategory, setEditedCategory] = useState({});
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -40,15 +41,35 @@ const SingleCategory = () => {
     }));
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleCancelEdit = () => {
     setEditMode(false);
   };
 
   const handleSubmit = async () => {
     try {
-      await axios.patch(`/categories/${categoryId}`, editedCategory);
+      // If a new file is selected, upload it
+      let imageUrl = editedCategory.image;
+      if (file) {
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", "upload");
+        const uploadRes = await axios.post(
+          "https://api.cloudinary.com/v1_1/dk6jzdkfw/image/upload",
+          data
+        );
+        imageUrl = uploadRes.data.url;
+      }
+
+      // Update category with new image URL if uploaded
+      const updatedCategory = { ...editedCategory, image: imageUrl };
+
+      await axios.patch(`/categories/${categoryId}`, updatedCategory);
       // Refresh category data after successful update
-      setCategoryData(editedCategory);
+      setCategoryData(updatedCategory);
       setEditMode(false);
     } catch (error) {
       console.error("Error updating category:", error);
@@ -96,12 +117,18 @@ const SingleCategory = () => {
                 />
                 Image:
                 <input
-                  type="text"
-                  name="image"
-                  value={editedCategory.image || ""}
-                  onChange={handleInputChange}
-                  placeholder="Image URL"
+                  type="file"
+                  onChange={handleFileChange}
+                  accept="image/*"
+                  // style={{ display: "none" }} // Hide the input
                 />
+                {file && (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="Preview"
+                    className="previewImage"
+                  />
+                )}
                 <button onClick={handleSubmit}>Save</button>
                 <button onClick={handleCancelEdit}>Cancel</button>
               </div>

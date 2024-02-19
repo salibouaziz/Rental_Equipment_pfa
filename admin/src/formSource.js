@@ -56,7 +56,7 @@ export const productInputs = [
     id: "categoryName",
     label: "CategoryName",
     type: "text",
-    placeholder: "Enter the category title",
+    placeholder: "choose a category please",
   },
   {
     id: "quantity",
@@ -75,6 +75,12 @@ export const productInputs = [
     label: "Rent Per Day",
     type: "number",
     placeholder: "Enter rent per day",
+  },
+  {
+    id: "status", // Added status field
+    label: "Status",
+    type: "text",
+    placeholder: "choose a status please",
   },
 ];
 

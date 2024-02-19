@@ -13,6 +13,8 @@ const SingleProduct = () => {
   const [productData, setProductData] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editedProduct, setEditedProduct] = useState({});
+  const [status, setStatus] = useState("");
+  const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -20,6 +22,8 @@ const SingleProduct = () => {
       try {
         const response = await axios.get(`/products/${productId}`);
         setProductData(response.data);
+        setEditedProduct(response.data);
+        setStatus(response.data.status);
       } catch (error) {
         console.error("Error fetching product data:", error);
         setError("Error fetching product data");
@@ -30,8 +34,6 @@ const SingleProduct = () => {
 
   const handleEdit = () => {
     setEditMode(true);
-    // Initialize edited product with current product data
-    setEditedProduct(productData);
   };
 
   const handleInputChange = (e) => {
@@ -42,22 +44,42 @@ const SingleProduct = () => {
     }));
   };
 
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
+  };
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleCancelEdit = () => {
     setEditMode(false);
   };
 
   const handleSubmit = async () => {
     try {
-      const { Title, description, image, quantity, rentPerHour, rentPerDay } = editedProduct;
-      await axios.patch(`/products/${productId}`, {
-        Title,
-        description,
-        image,
-        quantity,
-        rentPerHour,
-        rentPerDay
-      });
-      // Refresh product data after successful update
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'upload');
+
+      const uploadRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/dk6jzdkfw/image/upload",
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+
+      const { url } = uploadRes.data;
+      const updatedProduct = {
+        ...editedProduct,
+        image: url,
+        status: status,
+      };
+
+      await axios.patch(`/products/${productId}`, updatedProduct);
       const response = await axios.get(`/products/${productId}`);
       setProductData(response.data);
       setEditMode(false);
@@ -66,7 +88,6 @@ const SingleProduct = () => {
       setError("Error updating product");
     }
   };
-  
 
   return (
     <div className="single">
@@ -120,19 +141,22 @@ const SingleProduct = () => {
                 <input
                     type="text"
                     name="categoryName"
-                    value={productData.categoryName || ""} // Display the categoryName from productData
-                    readOnly // Make the input field read-only
+                    value={productData.categoryName || ""}
+                    readOnly
                     placeholder="Category Name"
                 />
                 Image:
-
                 <input
-                  type="text"
-                  name="image"
-                  value={editedProduct.image || ""}
-                  onChange={handleInputChange}
-                  placeholder="Image URL"
+                  type="file"
+                  onChange={handleFileChange}
                 />
+                {file && (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="Preview"
+                    className="previewImage"
+                  />
+                )}
                 Quantity:
                 <input
                   type="number"
@@ -157,6 +181,15 @@ const SingleProduct = () => {
                   onChange={handleInputChange}
                   placeholder="Rent Per Day"
                 />
+                Status:
+                <select
+                  value={status}
+                  onChange={handleStatusChange}
+                >
+                  <option value="broken down">Broken Down</option>
+                  <option value="available">Available</option>
+                  <option value="unavailable">Unavailable</option>
+                </select>
                 <button onClick={handleSubmit}>Save</button>
                 <button onClick={handleCancelEdit}>Cancel</button>
               </div>

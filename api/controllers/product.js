@@ -9,19 +9,20 @@ export const createProduct = async (req, res, next) => {
     const {
       Title,
       description,
-      categoryName, // Adjusted to categoryName
+      categoryName,
       image,
       quantity,
       rentPerHour,
       rentPerDay,
+      status // Add status to destructuring
     } = req.body;
-    // Check if the specified category exists
-    const existingCategory = await Category.findOne({name:categoryName});
+    
+    const existingCategory = await Category.findOne({ name: categoryName });
     if (!existingCategory) {
       return next(createError(404, 'Category not found'));
     }
-    if(!Title ||!description ||!categoryName ||!quantity ||!rentPerHour ||!rentPerDay){
-      return next(createError(400, 'please fill in all fields'));
+    if (!Title || !description || !categoryName || !quantity || !rentPerHour || !rentPerDay || !status) {
+      return next(createError(400, 'Please fill in all fields including status'));
     }
 
     const newProduct = new Product({
@@ -33,10 +34,10 @@ export const createProduct = async (req, res, next) => {
       quantity,
       rentPerHour,
       rentPerDay,
+      status // Assign status
     });
 
     await newProduct.save();
-    // Update the associated category with the new product ID
     existingCategory.products.push(newProduct._id);
     await existingCategory.save();
     res.status(201).json(newProduct);
@@ -44,28 +45,27 @@ export const createProduct = async (req, res, next) => {
     next(err);
   }
 };
+
 // Update a product by ID
 export const updateProduct = async (req, res, next) => {
   try {
-     // Check if the 'category' field exists in the update data
-     if ('category' in req.body) {
-      return next(createError(400, "Cannot update the 'category' field"));
-    }
+    // Prevent updating certain fields like 'category'
+    const { category, ...updatedFields } = req.body; // Destructure 'category' field from req.body
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },
-      { new: true,
-        runValidators: true,
-      }
+      { $set: updatedFields }, // Use destructured 'updatedFields' instead of 'req.body'
+      { new: true, runValidators: true }
     );
     if (!updatedProduct) {
-      return next(createError(404, 'Product not found'));
+      return res.status(404).json({ error: 'Product not found' });
     }
     res.status(200).json(updatedProduct);
   } catch (err) {
+    // Handle errors
     next(err);
   }
 };
+
 
 // Delete a product by ID
 export const deleteProduct = async (req, res, next) => {
@@ -74,10 +74,9 @@ export const deleteProduct = async (req, res, next) => {
     if (!deletedProduct) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    // Remove product ID from the associated category
     const associatedCategory = await Category.findById(deletedProduct.category);
     if (associatedCategory) {
-      associatedCategory.products.pull(req.params.id); // Remove the product ID
+      associatedCategory.products.pull(req.params.id);
       await associatedCategory.save();
     }
     res.status(200).json({ message: 'Product deleted successfully' });
@@ -85,8 +84,6 @@ export const deleteProduct = async (req, res, next) => {
     next(err);
   }
 };
-
-
 
 // Get a specific product by ID
 export const getProductById = async (req, res, next) => {
@@ -100,6 +97,7 @@ export const getProductById = async (req, res, next) => {
     next(err);
   }
 };
+
 // Get all products
 export const getProducts = async (req, res, next) => {
   try {
@@ -107,16 +105,16 @@ export const getProducts = async (req, res, next) => {
     res.status(200).json(products);
   } catch (err) {
     next(err);
-  }};
-  export const getProductsByCategoryId = async (req, res, next) => {
-    try {
-      const categoryId = req.params.categoryId;
-  
-      // Find products that belong to the specified category
-      const products = await Product.find({ category: categoryId });
-  
-      res.status(200).json(products);
-    } catch (err) {
-      next(err);
-    }
+  }
+};
+
+// Get products by category ID
+export const getProductsByCategoryId = async (req, res, next) => {
+  try {
+    const categoryId = req.params.categoryId;
+    const products = await Product.find({ category: categoryId });
+    res.status(200).json(products);
+  } catch (err) {
+    next(err);
+  }
 };

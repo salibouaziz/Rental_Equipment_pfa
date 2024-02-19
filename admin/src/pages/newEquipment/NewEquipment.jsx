@@ -106,20 +106,30 @@ const NewEquipment = () => {
               {productInputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label htmlFor={input.id}>{input.label}</label>
-                  {input.id === "categoryName" ? (
+                  {input.id === "categoryName" || input.id === "status" ? (
                     <select
                       id={input.id}
                       onChange={handleChange}
                       defaultValue=""
                     >
                       <option value="" disabled>
-                        Select Category
+                        {input.placeholder}
                       </option>
-                      {categories.map((category) => (
-                        <option key={category._id} value={category.name}>
-                          {category.name}
-                        </option>
-                      ))}
+                      {input.id === "categoryName"
+                        ? categories.map((category) => (
+                            <option key={category._id} value={category.name}>
+                              {category.name}
+                            </option>
+                          ))
+                        : input.id === "status"
+                        ? ['broken down', 'available', 'unavailable'].map(
+                            (status) => (
+                              <option key={status} value={status}>
+                                {status}
+                              </option>
+                            )
+                          )
+                        : null}
                     </select>
                   ) : (
                     <input

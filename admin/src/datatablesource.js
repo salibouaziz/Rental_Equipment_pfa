@@ -59,7 +59,7 @@ export const productColumns = [
   {
     field: "Title",
     headerName: "Title",
-    width: 230,
+    width: 250,
       renderCell: (params) => (
         <div className="cellWithImg">
           <img
@@ -74,7 +74,7 @@ export const productColumns = [
   {
     field: "description",
     headerName: "Description",
-    width: 250,
+    width: 300,
   },
   {
     field: "categoryName",
@@ -97,10 +97,23 @@ export const productColumns = [
     headerName: "Rent Per Day",
     width: 120,
   },
-  //{
-    //field: "isAvailable",
-    //headerName: "Available",
-    //width: 90,
-    //renderCell: (params) => <div>{params.row.isAvailable ? 'Yes' : 'No'}</div>, // Adjust the rendering as per your isAvailable field type
- // },
+  {
+    field: "status",
+    headerName: "Status",
+    width: 120,
+  },
+  
 ];
+//export const rentalColumns = [
+  //{ field: "_id", headerName: "ID", width: 250 },
+  //{ 
+    //field: "product.title", // Assuming 'title' is the property you want to display
+    //headerName: "Product Title", 
+    //width: 250 
+  //},
+   //{ field: "bookedTimeSlots.from", headerName: "From", width: 200 },
+   //{ field: "bookedTimeSlots.to", headerName: "To", width: 200 },
+   //{ field: "totalHours", headerName: "Total Hours", width: 150 },
+   //{ field: "totalAmount", headerName: "Total Amount", width: 150 },
+   //{ field: "returned", headerName: "Returned", width: 150 },
+ //];
