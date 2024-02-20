@@ -56,27 +56,32 @@ const SingleProduct = () => {
 
   const handleSubmit = async () => {
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', 'upload');
-
-      const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/dk6jzdkfw/image/upload",
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+      let imageUrl = editedProduct.image; // Use the existing image URL by default
+  
+      if (file) {
+        // If a new file is selected, upload it to Cloudinary
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'upload');
+  
+        const uploadRes = await axios.post(
+          "https://api.cloudinary.com/v1_1/dk6jzdkfw/image/upload",
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
           }
-        }
-      );
-
-      const { url } = uploadRes.data;
+        );
+  
+        imageUrl = uploadRes.data.url; // Update imageUrl with the newly uploaded image URL
+      }
+  
       const updatedProduct = {
         ...editedProduct,
-        image: url,
-        
+        image: imageUrl,
       };
-
+  
       await axios.patch(`/products/${productId}`, updatedProduct);
       const response = await axios.get(`/products/${productId}`);
       setProductData(response.data);
@@ -86,6 +91,7 @@ const SingleProduct = () => {
       setError("Error updating product");
     }
   };
+  
 
   return (
     <div className="single">
