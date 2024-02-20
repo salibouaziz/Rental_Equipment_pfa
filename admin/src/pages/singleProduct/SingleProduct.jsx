@@ -13,7 +13,7 @@ const SingleProduct = () => {
   const [productData, setProductData] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editedProduct, setEditedProduct] = useState({});
-  const [status, setStatus] = useState("");
+ 
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
 
@@ -23,7 +23,7 @@ const SingleProduct = () => {
         const response = await axios.get(`/products/${productId}`);
         setProductData(response.data);
         setEditedProduct(response.data);
-        setStatus(response.data.status);
+      
       } catch (error) {
         console.error("Error fetching product data:", error);
         setError("Error fetching product data");
@@ -44,9 +44,7 @@ const SingleProduct = () => {
     }));
   };
 
-  const handleStatusChange = (e) => {
-    setStatus(e.target.value);
-  };
+  
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -76,7 +74,7 @@ const SingleProduct = () => {
       const updatedProduct = {
         ...editedProduct,
         image: url,
-        status: status,
+        
       };
 
       await axios.patch(`/products/${productId}`, updatedProduct);
@@ -181,15 +179,7 @@ const SingleProduct = () => {
                   onChange={handleInputChange}
                   placeholder="Rent Per Day"
                 />
-                Status:
-                <select
-                  value={status}
-                  onChange={handleStatusChange}
-                >
-                  <option value="broken down">Broken Down</option>
-                  <option value="available">Available</option>
-                  <option value="unavailable">Unavailable</option>
-                </select>
+               
                 <button onClick={handleSubmit}>Save</button>
                 <button onClick={handleCancelEdit}>Cancel</button>
               </div>

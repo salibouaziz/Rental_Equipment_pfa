@@ -76,12 +76,7 @@ export const productInputs = [
     type: "number",
     placeholder: "Enter rent per day",
   },
-  {
-    id: "status", // Added status field
-    label: "Status",
-    type: "text",
-    placeholder: "choose a status please",
-  },
+
 ];
 
 

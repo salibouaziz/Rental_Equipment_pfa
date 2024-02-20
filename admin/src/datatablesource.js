@@ -97,11 +97,7 @@ export const productColumns = [
     headerName: "Rent Per Day",
     width: 120,
   },
-  {
-    field: "status",
-    headerName: "Status",
-    width: 120,
-  },
+ 
   
 ];
 //export const rentalColumns = [

@@ -106,7 +106,7 @@ const NewEquipment = () => {
               {productInputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label htmlFor={input.id}>{input.label}</label>
-                  {input.id === "categoryName" || input.id === "status" ? (
+                  {input.id === "categoryName"  ? (
                     <select
                       id={input.id}
                       onChange={handleChange}
@@ -121,14 +121,6 @@ const NewEquipment = () => {
                               {category.name}
                             </option>
                           ))
-                        : input.id === "status"
-                        ? ['broken down', 'available', 'unavailable'].map(
-                            (status) => (
-                              <option key={status} value={status}>
-                                {status}
-                              </option>
-                            )
-                          )
                         : null}
                     </select>
                   ) : (

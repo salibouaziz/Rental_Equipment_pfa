@@ -34,11 +34,6 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  status: {
-    type: String,
-    enum: ['broken down', 'available', 'unavailable'],
-    default: 'available',
-  },
 }, { timestamps: true });
 
 export default mongoose.model("Product", ProductSchema);

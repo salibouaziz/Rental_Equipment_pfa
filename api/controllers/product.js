@@ -14,15 +14,14 @@ export const createProduct = async (req, res, next) => {
       quantity,
       rentPerHour,
       rentPerDay,
-      status // Add status to destructuring
     } = req.body;
     
     const existingCategory = await Category.findOne({ name: categoryName });
     if (!existingCategory) {
       return next(createError(404, 'Category not found'));
     }
-    if (!Title || !description || !categoryName || !quantity || !rentPerHour || !rentPerDay || !status) {
-      return next(createError(400, 'Please fill in all fields including status'));
+    if (!Title || !description || !categoryName || !quantity || !rentPerHour || !rentPerDay ) {
+      return next(createError(400, 'Please fill in all fields '));
     }
 
     const newProduct = new Product({
@@ -34,7 +33,7 @@ export const createProduct = async (req, res, next) => {
       quantity,
       rentPerHour,
       rentPerDay,
-      status // Assign status
+     
     });
 
     await newProduct.save();
