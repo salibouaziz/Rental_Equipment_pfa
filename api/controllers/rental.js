@@ -49,7 +49,7 @@ export const createRental = async (req, res, next) => {
       ]
     });
     // If the product quantity is 0 and the slot is already booked, return an error
-    if (product.quantity === 0 && isBooked) {
+    if (product.quantityDisponible === 0 && isBooked) {
       return next(createError(400, 'Product is already booked for the specified time'));
     }
     // Calculate total hours
@@ -72,8 +72,8 @@ export const createRental = async (req, res, next) => {
       returned:false,
     });
     // Decrement product quantity only if it's greater than 0
-    if (product.quantity > 0) {
-      product.quantity -= 1;
+    if (product.quantityDisponible > 0) {
+      product.quantityDisponible -= 1;
     }
     // Save changes to product
     await product.save();
@@ -109,6 +109,38 @@ export const getAllRentals = async (req, res, next) => {
   try {
     const rentals = await Rental.find();
     res.status(200).json(rentals);
+  } catch (err) {
+    next(err);
+  }
+};
+// Update a rental by ID
+export const updateRental = async (req, res, next) => {
+  try {
+    const rentalId = req.params.rentalid;
+    const { returned } = req.body;
+
+    const rental = await Rental.findById(rentalId);
+    if (!rental) {
+      return next(createError(404, 'Rental not found'));
+    }
+
+    const previousReturnedStatus = rental.returned;
+
+    // Update the returned status
+    rental.returned = returned;
+    await rental.save();
+
+    // If the returned status has changed to true, increment quantityDisponible
+    if (!previousReturnedStatus && returned) {
+      const product = await Product.findById(rental.product);
+      if (!product) {
+        return next(createError(404, 'Product not found'));
+      }
+      product.quantityDisponible += 1;
+      await product.save();
+    }
+
+    res.status(200).json(rental);
   } catch (err) {
     next(err);
   }

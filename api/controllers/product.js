@@ -11,7 +11,7 @@ export const createProduct = async (req, res, next) => {
       description,
       categoryName,
       image,
-      quantity,
+      quantityTotal,
       rentPerHour,
       rentPerDay,
     } = req.body;
@@ -20,20 +20,22 @@ export const createProduct = async (req, res, next) => {
     if (!existingCategory) {
       return next(createError(404, 'Category not found'));
     }
-    if (!Title || !description || !categoryName || !quantity || !rentPerHour || !rentPerDay ) {
+    if (!Title || !description || !categoryName || !quantityTotal || !rentPerHour || !rentPerDay ) {
       return next(createError(400, 'Please fill in all fields '));
     }
-
+    const quantityDisponible = quantityTotal;
+    const quantityPanne = 0;
     const newProduct = new Product({
       Title,
       description,
       categoryName,
       category: existingCategory._id,
       image,
-      quantity,
+      quantityTotal,
+      quantityDisponible,
+      quantityPanne,
       rentPerHour,
       rentPerDay,
-     
     });
 
     await newProduct.save();
@@ -48,23 +50,49 @@ export const createProduct = async (req, res, next) => {
 // Update a product by ID
 export const updateProduct = async (req, res, next) => {
   try {
-    // Prevent updating certain fields like 'category'
-    const { category, ...updatedFields } = req.body; // Destructure 'category' field from req.body
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      { $set: updatedFields }, // Use destructured 'updatedFields' instead of 'req.body'
-      { new: true, runValidators: true }
-    );
-    if (!updatedProduct) {
+    const { category, quantityPanne: newQuantityPanne, quantityTotal: newQuantityTotal, ...updatedFields } = req.body;
+    const productId = req.params.id;
+
+    // Fetch the existing product
+    const existingProduct = await Product.findById(productId);
+    if (!existingProduct) {
       return res.status(404).json({ error: 'Product not found' });
     }
+
+    // Calculate the difference between old and new quantityPanne
+    const oldQuantityPanne = existingProduct.quantityPanne || 0;
+    const differenceQuantityPanne = newQuantityPanne - oldQuantityPanne;
+
+    // Calculate the difference between old and new quantityTotal
+    const oldQuantityTotal = existingProduct.quantityTotal || 0;
+    const differenceQuantityTotal = newQuantityTotal - oldQuantityTotal;
+
+    // Calculate the new quantityDisponible
+    let newQuantityDisponible = existingProduct.quantityDisponible || 0;
+    if (!isNaN(differenceQuantityTotal)) {
+      newQuantityDisponible += differenceQuantityTotal;
+    }
+    if (!isNaN(differenceQuantityPanne)) {
+      newQuantityDisponible -= differenceQuantityPanne;
+    }
+    // Update other fields except quantityTotal and quantityPanne
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      {
+        ...updatedFields,
+        quantityPanne: newQuantityPanne,
+        quantityTotal: newQuantityTotal,
+        quantityDisponible: newQuantityDisponible,
+        category
+      },
+      { new: true, runValidators: true }
+    );
+
     res.status(200).json(updatedProduct);
   } catch (err) {
-    // Handle errors
     next(err);
   }
 };
-
 
 // Delete a product by ID
 export const deleteProduct = async (req, res, next) => {

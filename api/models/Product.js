@@ -22,9 +22,16 @@ const ProductSchema = new mongoose.Schema({
   image: {
     type: [String],
   },
-  quantity: {
+  quantityTotal: {
     type: Number,
     required: true,
+  },
+  quantityDisponible: {
+    type: Number,
+  },
+  quantityPanne: {
+    type: Number,
+    default: 0
   },
   rentPerHour: {
     type: Number,

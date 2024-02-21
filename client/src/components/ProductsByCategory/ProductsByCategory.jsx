@@ -5,6 +5,8 @@ import './ProductsByCategory.css';
 const ProductsByCategory = () => {
   const { categoryId } = useParams();
   const [products, setProducts] = useState([]);
+  const [sortType, setSortType] = useState('');
+  const [sortOrder, setSortOrder] = useState('asc');
 
   useEffect(() => {
     const fetchProductsByCategory = async () => {
@@ -18,11 +20,42 @@ const ProductsByCategory = () => {
 
     fetchProductsByCategory();
   }, [categoryId]);
+  const handleSortChange = (event) => {
+    setSortType(event.target.value);
+  };
+
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
+  const handleApplySort = () => {
+    let sortedProducts = [...products];
+    if (sortType === 'rentPerHour' || sortType === 'rentPerDay') {
+      sortedProducts.sort((a, b) => {
+        if (sortOrder === 'asc') {
+          return a[sortType] - b[sortType];
+        } else {
+          return b[sortType] - a[sortType];
+        }
+      });
+      setProducts(sortedProducts);
+    }
+  };
  
   return (
     <div className="products-container">
          <h1 className="products-heading">Products for Category</h1>
-    
+          <div className="sort-container">
+          <select onChange={handleSortChange}>
+            <option value="">Sort By</option>
+            <option value="rentPerHour">Rent Per Hour</option>
+            <option value="rentPerDay">Rent Per Day</option>
+          </select>
+          <button onClick={handleApplySort}>Apply</button>
+          <button onClick={toggleSortOrder}>
+            {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
+          </button>
+        </div>
          <ul className="products-list">
         {products.map((product) => (
           <li key={product._id} className="product-item1">
