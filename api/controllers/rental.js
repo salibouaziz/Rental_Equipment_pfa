@@ -2,6 +2,7 @@ import Rental from '../models/Rental.js';
 import Product from '../models/Product.js';
 import createError from '../utils/error.js';
 import User from '../models/User.js';
+import { v4 as uuidv4 } from 'uuid';
 
 // CREATE A NEW RENTAL
 export const createRental = async (req, res, next) => {
@@ -22,6 +23,7 @@ export const createRental = async (req, res, next) => {
       return next(createError(404, "User Not Found!")); 
     }
     const userId = user._id;
+    const transactionId = uuidv4();
     // Check if the booked time is valid
     const currentDate = new Date();
     const bookedFromDate = new Date(bookedTimeSlots.from);
@@ -70,6 +72,7 @@ export const createRental = async (req, res, next) => {
       totalHours,
       totalAmount,
       returned:false,
+      transactionId: transactionId
     });
     // Decrement product quantity only if it's greater than 0
     if (product.quantityDisponible > 0) {
