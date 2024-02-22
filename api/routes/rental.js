@@ -1,10 +1,6 @@
 import express from 'express';
 import {
-<<<<<<< HEAD
-  createRental, getAllRentals, getRentalById, getAllRentalsByUser , deleteRentalById
-=======
-  createRental, getAllRentals, getRentalById, updateRental
->>>>>>> c81a7bcb2de564fc82f927d74c07111d20608759
+  createRental, getAllRentals, getRentalById, getAllRentalsByUser , deleteRentalById, updateRental
 } from '../controllers/rental.js';
 import { protect, verifyAdmin, verifyUserAdmin } from '../utils/verifyToken.js';
 
@@ -15,7 +11,7 @@ router.post('/:productid', protect, createRental);
 router.patch('/:rentalid', protect,verifyAdmin, updateRental);
 // Get a specific rental by ID
 router.get('/:rentalid', getRentalById);
-router.delete('/delete/:rentalid', deleteRentalById);
+router.delete('/delete/:rentalid', protect,deleteRentalById);
 // Get all rentals
 router.get('/', getAllRentals);
 
