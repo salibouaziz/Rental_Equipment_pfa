@@ -50,7 +50,6 @@ const Header = () => {
           <ul className={navList ? "small": "flex"}>
             <li><Link to="/">home</Link></li>
             <li><Link to="/about">about</Link></li>
-            <li><Link to="/services">services</Link></li>
             <li><Link to="/products">products</Link></li>
             <li><Link to="/categories">categories</Link></li>
             <li><Link to="/contact">contact</Link></li>

@@ -12,15 +12,17 @@
       padding: 10px;
       margin: 20px;
       display: flex;
+      flex-direction: column;
 
       h1 {
         color: lightgray;
         font-size: 20px;
+        margin-bottom: 10px; /* Added margin bottom for spacing */
       }
 
       .left {
-        flex: 1;
         text-align: center;
+        margin-bottom: 20px; /* Added margin bottom for spacing */
 
         img {
           width: 100px;
@@ -31,7 +33,9 @@
       }
 
       .right {
-        flex: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Added gap between form inputs and button */
 
         form {
           display: flex;
@@ -40,7 +44,7 @@
           justify-content: space-around;
 
           .formInput {
-            width: 40%;
+            width: calc(50% - 15px); /* Adjusted width to fit two inputs in a row with gap */
 
             label {
               display: flex;
@@ -64,11 +68,12 @@
             width: 150px;
             padding: 10px;
             border: none;
-            background-color: teal;
+            background-color: rgba(235, 151, 17, 0.865);
             color: white;
             font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
+            align-self: center; /* Center button horizontally */
           }
         }
       }

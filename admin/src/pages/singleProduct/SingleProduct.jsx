@@ -13,6 +13,8 @@ const SingleProduct = () => {
   const [productData, setProductData] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editedProduct, setEditedProduct] = useState({});
+ 
+  const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -20,6 +22,8 @@ const SingleProduct = () => {
       try {
         const response = await axios.get(`/products/${productId}`);
         setProductData(response.data);
+        setEditedProduct(response.data);
+      
       } catch (error) {
         console.error("Error fetching product data:", error);
         setError("Error fetching product data");
@@ -30,8 +34,6 @@ const SingleProduct = () => {
 
   const handleEdit = () => {
     setEditMode(true);
-    // Initialize edited product with current product data
-    setEditedProduct(productData);
   };
 
   const handleInputChange = (e) => {
@@ -42,22 +44,45 @@ const SingleProduct = () => {
     }));
   };
 
+  
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleCancelEdit = () => {
     setEditMode(false);
   };
 
   const handleSubmit = async () => {
     try {
-      const { Title, description, image, quantity, rentPerHour, rentPerDay } = editedProduct;
-      await axios.patch(`/products/${productId}`, {
-        Title,
-        description,
-        image,
-        quantity,
-        rentPerHour,
-        rentPerDay
-      });
-      // Refresh product data after successful update
+      let imageUrl = editedProduct.image; // Use the existing image URL by default
+  
+      if (file) {
+        // If a new file is selected, upload it to Cloudinary
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'upload');
+  
+        const uploadRes = await axios.post(
+          "https://api.cloudinary.com/v1_1/dk6jzdkfw/image/upload",
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        );
+  
+        imageUrl = uploadRes.data.url; // Update imageUrl with the newly uploaded image URL
+      }
+  
+      const updatedProduct = {
+        ...editedProduct,
+        image: imageUrl,
+      };
+  
+      await axios.patch(`/products/${productId}`, updatedProduct);
       const response = await axios.get(`/products/${productId}`);
       setProductData(response.data);
       setEditMode(false);
@@ -120,26 +145,37 @@ const SingleProduct = () => {
                 <input
                     type="text"
                     name="categoryName"
-                    value={productData.categoryName || ""} // Display the categoryName from productData
-                    readOnly // Make the input field read-only
+                    value={productData.categoryName || ""}
+                    readOnly
                     placeholder="Category Name"
                 />
                 Image:
-
                 <input
-                  type="text"
-                  name="image"
-                  value={editedProduct.image || ""}
-                  onChange={handleInputChange}
-                  placeholder="Image URL"
+                  type="file"
+                  onChange={handleFileChange}
                 />
-                Quantity:
+                {file && (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="Preview"
+                    className="previewImage"
+                  />
+                )}
+                QuantityTotal:
                 <input
                   type="number"
-                  name="quantity"
-                  value={editedProduct.quantity || ""}
+                  name="quantityTotal"
+                  value={editedProduct.quantityTotal || ""}
                   onChange={handleInputChange}
-                  placeholder="Quantity"
+                  placeholder="Quantity Total"
+                />
+                QuantityPanne:
+                <input
+                  type="number"
+                  name="quantityPanne"
+                  value={editedProduct.quantityPanne || ""}
+                  onChange={handleInputChange}
+                  placeholder="Quantity Panne"
                 />
                 RentPerHour:
                 <input
@@ -157,6 +193,7 @@ const SingleProduct = () => {
                   onChange={handleInputChange}
                   placeholder="Rent Per Day"
                 />
+               
                 <button onClick={handleSubmit}>Save</button>
                 <button onClick={handleCancelEdit}>Cancel</button>
               </div>

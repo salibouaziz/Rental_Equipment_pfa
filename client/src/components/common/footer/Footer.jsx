@@ -13,6 +13,12 @@ const Footer = () => {
   // Check if the current location path is in the excluded paths
   const shouldRenderFooter = !excludedPaths.includes(location.pathname);
 
+  // Function to handle the click event of "Contact Us Today" button
+  const handleContactButtonClick = () => {
+    // Navigate to the contact page
+    window.location.href = "/contact";
+  };
+
   // If the current path is one of the excluded paths, return null to not render the footer
   if (!shouldRenderFooter) return null;
 
@@ -25,7 +31,8 @@ const Footer = () => {
               <h1>Do You Have Questions ?</h1>
               <p>We'll help you to rent anything you want.</p>
             </div>
-            <button className="btn5">Contact Us Today</button>
+            {/* Button with onClick handler */}
+            <button className="btn5" onClick={handleContactButtonClick}>Contact Us Today</button>
           </div>
         </div>
       </section>
@@ -38,7 +45,7 @@ const Footer = () => {
               <span>UP</span>
               <h2>Do You Need Help With Anything?</h2>
               <p>
-                Receive updates, hot deals, tutorials, discounts sent straignt
+                Receive updates, hot deals, tutorials, discounts sent straight
                 in your inbox every month
               </p>
 
@@ -49,6 +56,7 @@ const Footer = () => {
             </div>
           </div>
 
+          {/* Mapping through footer data */}
           {footer.map((val) => (
             <div className="box" key={val.title}>
               <h3>{val.title}</h3>
@@ -62,7 +70,7 @@ const Footer = () => {
         </div>
       </footer>
       <div className="legal">
-        <span>© 2024 RentUP. Designd By OSI.</span>
+        <span>© 2024 RentUP. Designed By OSI.</span>
       </div>
     </>
   );

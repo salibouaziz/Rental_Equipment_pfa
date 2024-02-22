@@ -59,7 +59,7 @@ export const productColumns = [
   {
     field: "Title",
     headerName: "Title",
-    width: 230,
+    width: 250,
       renderCell: (params) => (
         <div className="cellWithImg">
           <img
@@ -74,18 +74,28 @@ export const productColumns = [
   {
     field: "description",
     headerName: "Description",
-    width: 250,
+    width: 400,
   },
   {
     field: "categoryName",
     headerName: "CategoryName",
-    width: 250,
+    width: 200,
    
   },
   {
-    field: "quantity",
-    headerName: "Quantity",
-    width: 90,
+    field: "quantityTotal",
+    headerName: "Total Quantity",
+    width: 120,
+  },
+  {
+    field: "quantityDisponible",
+    headerName: "Available Quantity",
+    width: 120,
+  },
+  {
+    field: "quantityPanne",
+    headerName: "Panne Quantity",
+    width: 120,
   },
   {
     field: "rentPerHour",
@@ -97,10 +107,45 @@ export const productColumns = [
     headerName: "Rent Per Day",
     width: 120,
   },
-  //{
-    //field: "isAvailable",
-    //headerName: "Available",
-    //width: 90,
-    //renderCell: (params) => <div>{params.row.isAvailable ? 'Yes' : 'No'}</div>, // Adjust the rendering as per your isAvailable field type
- // },
+ 
+  
+];
+// rentalColumns
+export const rentalColumns = [
+  { field: "_id", headerName: "ID", width: 230 },
+  {
+    field: "product",
+    headerName: "Product",
+    width: 250,
+    renderCell: (params) => (
+      <span>{params.row.product}</span>
+    ),
+  },
+  {
+    field: "user",
+    headerName: "User",
+    width: 200,
+    renderCell: (params) => (
+      <span>{params.row.user}</span>
+    ),
+  },  
+  {
+    field: "totalHours",
+    headerName: "Total Hours",
+    width: 200,
+  },
+  {
+    field: "totalAmount",
+    headerName: "Total Amount",
+    width: 200,
+  },
+  {
+    field: "returned",
+    headerName: "Returned",
+    width: 150,
+    renderCell: (params) => (
+      <span>{params.row.returned ? "Yes" : "No"}</span>
+    ),
+  },
+ 
 ];

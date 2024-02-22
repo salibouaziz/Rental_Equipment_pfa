@@ -1,6 +1,5 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../../datatablesource";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch"
@@ -62,7 +61,7 @@ const Datatable = ({columns}) => {
     <div className="datatable">
       <div className="datatableTitle">
         {path}
-        {path !== "users" && ( // Render the "Add New" link if path is not "/users"
+        {(path !== "users" && path !== "rental") && ( // Render the "Add New" link if path is not "/users"
           <Link to={`/${path}/new`} className="link">
             Add New
           </Link>

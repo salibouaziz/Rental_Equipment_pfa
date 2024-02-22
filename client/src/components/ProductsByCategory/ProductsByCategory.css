@@ -87,3 +87,31 @@
   .product-item1:hover .product-name1 {
     opacity: 1;
   }
+  .sort-container {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .sort-container select {
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(235, 151, 17, 0.865);
+    margin-right: 10px;
+  }
+  
+  .sort-container button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: rgba(235, 151, 17, 0.865);
+    color: #fff;
+    border: none;
+    margin-left: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .sort-container button:hover {
+    background-color: #000;
+  }
+  

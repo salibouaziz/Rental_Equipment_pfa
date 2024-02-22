@@ -2,6 +2,7 @@ import Rental from '../models/Rental.js';
 import Product from '../models/Product.js';
 import createError from '../utils/error.js';
 import User from '../models/User.js';
+import { v4 as uuidv4 } from 'uuid';
 
 // CREATE A NEW RENTAL
 export const createRental = async (req, res, next) => {
@@ -22,6 +23,7 @@ export const createRental = async (req, res, next) => {
       return next(createError(404, "User Not Found!")); 
     }
     const userId = user._id;
+    const transactionId = uuidv4();
     // Check if the booked time is valid
     const currentDate = new Date();
     const bookedFromDate = new Date(bookedTimeSlots.from);
@@ -49,7 +51,7 @@ export const createRental = async (req, res, next) => {
       ]
     });
     // If the product quantity is 0 and the slot is already booked, return an error
-    if (product.quantity === 0 && isBooked) {
+    if (product.quantityDisponible === 0 && isBooked) {
       return next(createError(400, 'Product is already booked for the specified time'));
     }
     // Calculate total hours
@@ -70,10 +72,11 @@ export const createRental = async (req, res, next) => {
       totalHours,
       totalAmount,
       returned:false,
+      transactionId: transactionId
     });
     // Decrement product quantity only if it's greater than 0
-    if (product.quantity > 0) {
-      product.quantity -= 1;
+    if (product.quantityDisponible > 0) {
+      product.quantityDisponible -= 1;
     }
     // Save changes to product
     await product.save();
@@ -113,6 +116,7 @@ export const getAllRentals = async (req, res, next) => {
     next(err);
   }
 };
+<<<<<<< HEAD
 export const getAllRentalsByUser = async (req, res, next) => {
   try {
     const userId = req.user._id; // Get the user ID from the request
@@ -132,10 +136,20 @@ export const deleteRentalById = async (req, res, next) => {
     // Find the rental by ID
     const rental = await Rental.findById(rentalId);
     
+=======
+// Update a rental by ID
+export const updateRental = async (req, res, next) => {
+  try {
+    const rentalId = req.params.rentalid;
+    const { returned } = req.body;
+
+    const rental = await Rental.findById(rentalId);
+>>>>>>> c81a7bcb2de564fc82f927d74c07111d20608759
     if (!rental) {
       return next(createError(404, 'Rental not found'));
     }
 
+<<<<<<< HEAD
     // Increment product quantity (assuming it was decremented during rental creation)
     const product = await Product.findById(rental.product);
     if (product) {
@@ -151,3 +165,26 @@ export const deleteRentalById = async (req, res, next) => {
     next(err);
   }
 };
+=======
+    const previousReturnedStatus = rental.returned;
+
+    // Update the returned status
+    rental.returned = returned;
+    await rental.save();
+
+    // If the returned status has changed to true, increment quantityDisponible
+    if (!previousReturnedStatus && returned) {
+      const product = await Product.findById(rental.product);
+      if (!product) {
+        return next(createError(404, 'Product not found'));
+      }
+      product.quantityDisponible += 1;
+      await product.save();
+    }
+
+    res.status(200).json(rental);
+  } catch (err) {
+    next(err);
+  }
+};
+>>>>>>> c81a7bcb2de564fc82f927d74c07111d20608759

@@ -56,13 +56,13 @@ export const productInputs = [
     id: "categoryName",
     label: "CategoryName",
     type: "text",
-    placeholder: "Enter the category title",
+    placeholder: "choose a category please",
   },
   {
-    id: "quantity",
-    label: "Quantity",
+    id: "quantityTotal",
+    label: "Total Quantity",
     type: "number",
-    placeholder: "Enter the quantity",
+    placeholder: "Enter the total quantity",
   },
   {
     id: "rentPerHour",
@@ -76,6 +76,7 @@ export const productInputs = [
     type: "number",
     placeholder: "Enter rent per day",
   },
+
 ];
 
 

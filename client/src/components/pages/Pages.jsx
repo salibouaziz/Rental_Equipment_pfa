@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { getLoginStatus } from '../../redux/features/auth/authSlice';
 import About from "../about/About";
-import Services from "../services/Services";
+
 import Contact from "../contact/Contact";
 import Cart from "../cart/Cart";
 import Rental from '../rental/Rental';
@@ -38,7 +38,6 @@ const Pages = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route exact path='/about' element={<About />} />
-          <Route exact path='/services' element={<Services />} />
           <Route exact path='/contact' element={<Contact />} />
           <Route path='/products' element={<Products />} />
           <Route path='/categories' element={<Categories />} />

@@ -4,12 +4,13 @@ import List from "./pages/list/List";
 import Single from "./pages/single/Single"
 import SingleCategory from "./pages/singleCategory/SingleCategory"
 import SingleProduct from "./pages/singleProduct/SingleProduct"
+import SingleRental from "./pages/singleRental/SingleRental"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/AuthContext";
-import { productColumns, userColumns, categoryColumns } from "./datatablesource";
+import { productColumns, userColumns, categoryColumns,rentalColumns } from "./datatablesource";
 import NewEquipment from "./pages/newEquipment/NewEquipment";
 import NewCategory from "./pages/newCategory/NewCategory";
 
@@ -55,6 +56,10 @@ function App() {
               />
             </Route>
           </Route>
+          <Route path="rental">
+              <Route index element={<ProtectedRoute><List columns={rentalColumns} /></ProtectedRoute>} />
+              <Route path=":rentalId" element={<ProtectedRoute><SingleRental /></ProtectedRoute>} />
+            </Route>
         </Routes>
       </BrowserRouter>
     </div>

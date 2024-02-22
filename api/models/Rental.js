@@ -15,6 +15,7 @@ const bookingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  transactionId: { type: String } 
 }, { timestamps: true }
 );
 export default mongoose.model("Rental", bookingSchema);
