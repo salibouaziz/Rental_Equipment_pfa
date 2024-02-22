@@ -74,18 +74,28 @@ export const productColumns = [
   {
     field: "description",
     headerName: "Description",
-    width: 300,
+    width: 400,
   },
   {
     field: "categoryName",
     headerName: "CategoryName",
-    width: 250,
+    width: 200,
    
   },
   {
-    field: "quantity",
-    headerName: "Quantity",
-    width: 90,
+    field: "quantityTotal",
+    headerName: "Total Quantity",
+    width: 120,
+  },
+  {
+    field: "quantityDisponible",
+    headerName: "Available Quantity",
+    width: 120,
+  },
+  {
+    field: "quantityPanne",
+    headerName: "Panne Quantity",
+    width: 120,
   },
   {
     field: "rentPerHour",
@@ -100,16 +110,42 @@ export const productColumns = [
  
   
 ];
-//export const rentalColumns = [
-  //{ field: "_id", headerName: "ID", width: 250 },
-  //{ 
-    //field: "product.title", // Assuming 'title' is the property you want to display
-    //headerName: "Product Title", 
-    //width: 250 
-  //},
-   //{ field: "bookedTimeSlots.from", headerName: "From", width: 200 },
-   //{ field: "bookedTimeSlots.to", headerName: "To", width: 200 },
-   //{ field: "totalHours", headerName: "Total Hours", width: 150 },
-   //{ field: "totalAmount", headerName: "Total Amount", width: 150 },
-   //{ field: "returned", headerName: "Returned", width: 150 },
- //];
+// rentalColumns
+export const rentalColumns = [
+  { field: "_id", headerName: "ID", width: 230 },
+  {
+    field: "product",
+    headerName: "Product",
+    width: 250,
+    renderCell: (params) => (
+      <span>{params.row.product}</span>
+    ),
+  },
+  {
+    field: "user",
+    headerName: "User",
+    width: 200,
+    renderCell: (params) => (
+      <span>{params.row.user}</span>
+    ),
+  },  
+  {
+    field: "totalHours",
+    headerName: "Total Hours",
+    width: 200,
+  },
+  {
+    field: "totalAmount",
+    headerName: "Total Amount",
+    width: 200,
+  },
+  {
+    field: "returned",
+    headerName: "Returned",
+    width: 150,
+    renderCell: (params) => (
+      <span>{params.row.returned ? "Yes" : "No"}</span>
+    ),
+  },
+ 
+];

@@ -60,7 +60,7 @@ const Sidebar = () => {
               <span>Equipments</span>
             </li>
           </Link>
-          <Link to="/rentals" style={{ textDecoration: "none" }}>
+          <Link to="/rental" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>Rentals</span>

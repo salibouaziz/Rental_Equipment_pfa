@@ -37,24 +37,25 @@ const NewEquipment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const data = new FormData();
     data.append("file", file);
     data.append("upload_preset", "upload");
-
+  
     try {
       const uploadRes = await axios.post(
         "https://api.cloudinary.com/v1_1/dk6jzdkfw/image/upload",
         data
       );
-
+  
       const { url } = uploadRes.data;
-
+  
       const newEquipment = {
         ...info,
         image: [url],
+        quantityTotal: info.quantityTotal, // Use quantityTotal from the form data
       };
-
+  
       await axios.post("/products", newEquipment);
       // Clear form fields after successful submission
       setInfo({});
@@ -69,6 +70,7 @@ const NewEquipment = () => {
       setError(err.response.data.message);
     }
   };
+  
 
   return (
     <div className="new">

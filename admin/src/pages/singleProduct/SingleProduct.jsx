@@ -161,13 +161,21 @@ const SingleProduct = () => {
                     className="previewImage"
                   />
                 )}
-                Quantity:
+                QuantityTotal:
                 <input
                   type="number"
-                  name="quantity"
-                  value={editedProduct.quantity || ""}
+                  name="quantityTotal"
+                  value={editedProduct.quantityTotal || ""}
                   onChange={handleInputChange}
-                  placeholder="Quantity"
+                  placeholder="Quantity Total"
+                />
+                QuantityPanne:
+                <input
+                  type="number"
+                  name="quantityPanne"
+                  value={editedProduct.quantityPanne || ""}
+                  onChange={handleInputChange}
+                  placeholder="Quantity Panne"
                 />
                 RentPerHour:
                 <input

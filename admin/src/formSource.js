@@ -59,10 +59,10 @@ export const productInputs = [
     placeholder: "choose a category please",
   },
   {
-    id: "quantity",
-    label: "Quantity",
+    id: "quantityTotal",
+    label: "Total Quantity",
     type: "number",
-    placeholder: "Enter the quantity",
+    placeholder: "Enter the total quantity",
   },
   {
     id: "rentPerHour",

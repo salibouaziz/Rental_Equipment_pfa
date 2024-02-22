@@ -61,7 +61,7 @@ const Datatable = ({columns}) => {
     <div className="datatable">
       <div className="datatableTitle">
         {path}
-        {path !== "users" && ( // Render the "Add New" link if path is not "/users"
+        {(path !== "users" && path !== "rental") && ( // Render the "Add New" link if path is not "/users"
           <Link to={`/${path}/new`} className="link">
             Add New
           </Link>
