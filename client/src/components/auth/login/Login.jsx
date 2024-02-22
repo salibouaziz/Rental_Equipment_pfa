@@ -4,7 +4,7 @@ import "./Login.css";
 import { toast } from "react-toastify";
 import { validateEmail } from '../../../utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { RESET_AUTH, login } from '../../../redux/features/auth/authSlice';
+import { RESET_AUTH, login, logout } from '../../../redux/features/auth/authSlice';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,17 +32,34 @@ const Login = () => {
     //this is a redux now we will bring in a dispatch variable
     await dispatch(login(userData));
   };
-  useEffect(()=>{
-    if(isSuccess && isLoggedIn){
-      if (user && user.isAdmin) { // Check if user is admin
-        window.location.href = 'http://localhost:3002/admin-panel';
-      } else {
-        navigate("/"); // Navigate to home if not admin
+  useEffect(() => {
+    const handleLoginRedirect = async () => {
+      if (isSuccess && isLoggedIn) {
+        if (user && user.isAdmin) { // Check if user is admin
+          try {
+            await dispatch(logout()).unwrap();
+            // Navigate to the admin panel
+            window.location.href = 'http://localhost:3002/admin-panel';
+          } catch (error) {
+            // Handle logout error
+            console.error("Logout error:", error);
+            // You may want to handle the error appropriately, e.g., redirect to a login page
+          }
+        } else {
+          // If not admin, navigate to the user interface
+          navigate("/");
+  
+          // Reset the auth state
+          dispatch(RESET_AUTH());
+        }
       }
-    }
-    dispatch(RESET_AUTH());
-  },[isSuccess,isLoggedIn,user,dispatch,navigate]);
-
+    };
+  
+    // Invoke the async function
+    handleLoginRedirect();
+  }, [isSuccess, isLoggedIn, user, dispatch, navigate]);
+  
+  
   return (
   <div className="center">
    

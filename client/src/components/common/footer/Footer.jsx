@@ -34,7 +34,7 @@ const Footer = () => {
         <div className="container">
           <div className="box">
             <div className="logo">
-              <span style={{ color: "black", fontSize: "35px" }}>RENT</span>
+              <span style={{ color: "white", fontSize: "35px" }}>RENT</span>
               <span>UP</span>
               <h2>Do You Need Help With Anything?</h2>
               <p>

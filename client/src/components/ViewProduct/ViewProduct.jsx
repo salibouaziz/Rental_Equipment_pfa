@@ -29,7 +29,7 @@ const ViewProduct = () => {
   const handleRentNow = async () => {
     try {
       // Check if user is logged in
-      if (!isLoggedIn) {
+      if (!isLoggedIn ) {
         navigate('/login'); // Redirect to login page if not logged in
         return;
       }
@@ -53,7 +53,7 @@ const ViewProduct = () => {
         toast.success('Rental created successfully', {
             position: "bottom-left"
         });
-        navigate(`/rental/${response.data._id}`);
+        navigate(`/cart`);
       } else {
         toast.error(response.data.message, {
             position: "bottom-left"

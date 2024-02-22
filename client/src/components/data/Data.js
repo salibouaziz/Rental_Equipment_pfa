@@ -32,6 +32,7 @@ export const nav = [
     path: "/login",
   },
 
+
 ]
 /*export const featured = [
   {

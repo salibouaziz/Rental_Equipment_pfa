@@ -15,13 +15,21 @@ import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 
+import authService from '../redux/auth/authService';
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
-  const handleLogout = () => {
-    // Any logout logic you might have
-
-    // Redirect to the login page on a different port
-    window.location.href = 'http://localhost:3000';
+  const handleLogout = async () => {
+    try {
+      // Make sure to include withCredentials: true
+      await authService.logout();
+      console.log( "Logged out" );
+      
+      // Redirect to the login page on a different port
+      window.location.href = 'http://localhost:3000';
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Handle error if needed
+    }
   };
 
   return (

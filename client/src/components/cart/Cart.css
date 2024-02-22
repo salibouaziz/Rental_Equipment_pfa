@@ -1,0 +1,113 @@
+/* Add this CSS in your styles file or component */
+.rentals-table {
+  width: 90%;
+  border-collapse: collapse;
+  border: 1px solid #ccc; /* Adjust border color as needed */
+ 
+  border-radius: 10px;
+  transition: transform 0.2s;
+  overflow: hidden;
+  /* background: #fff; */ /* Remove or comment out this line */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced box shadow */
+  margin: 20px auto; /* Center the table */
+  display: table;
+
+}
+
+  .rentalheading{
+    text-align: center;
+    font-size: 60px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    color: #333; /* Adjust color as needed */
+  }
+  .rentals-table th,
+  .rentals-table td {
+    padding: 12px;
+   
+    text-align: center;
+  }
+  
+  .rental-image {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+
+  }
+  
+  
+  .product-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+/* Add this CSS in your styles file or component */
+.namedate{
+  color: #000000;
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+  font-size: 18px;
+}
+ 
+  .delete-button {
+    background-color: #fff;
+    color: #000000;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 3px;
+  }
+  
+  .delete-button:hover {
+    background-color: rgba(235, 151, 17, 0.865);
+    color: #000000;
+  }
+  .product-info a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    font-size: 18px;
+  }
+  
+  .product-info a:hover {
+    text-decoration: none;
+  }
+  
+  .product-info a::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 0; /* Start with width set to 0 */
+    background-color: rgba(235, 151, 17, 0.865);
+    position: absolute;
+    bottom: -2px;
+    left: 0; /* Start from the left of the link */
+    transition: width 0.3s ease, left 0.3s ease; /* Adjust the transition speed as needed */
+  }
+  
+  .product-info a:hover::after {
+    width: 100%;
+    left: 0; /* Ensure the line starts from the left */
+  }
+.checkout-button{
+  padding: 8px 12px;
+  background-color: rgba(235, 151, 17, 0.865);
+  color: #000000; /* Adjust text color as needed */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; /* Remove default link underline */
+  display: inline-block;
+  font-weight: bold;
+}
+.checkout-button:hover {
+  background-color: #000000; /* Adjust hover color as needed */
+  color: #fff;
+}
+.rental-separator {
+  border-bottom: 2px solid rgba(235, 151, 17, 0.5); /* Adjust color and thickness as needed */
+  margin-bottom: 15px; /* Adjust spacing as needed */
+}
