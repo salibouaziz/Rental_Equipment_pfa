@@ -116,7 +116,7 @@ export const getAllRentals = async (req, res, next) => {
     next(err);
   }
 };
-<<<<<<< HEAD
+
 export const getAllRentalsByUser = async (req, res, next) => {
   try {
     const userId = req.user._id; // Get the user ID from the request
@@ -135,21 +135,10 @@ export const deleteRentalById = async (req, res, next) => {
 
     // Find the rental by ID
     const rental = await Rental.findById(rentalId);
-    
-=======
+
 // Update a rental by ID
-export const updateRental = async (req, res, next) => {
-  try {
-    const rentalId = req.params.rentalid;
-    const { returned } = req.body;
 
-    const rental = await Rental.findById(rentalId);
->>>>>>> c81a7bcb2de564fc82f927d74c07111d20608759
-    if (!rental) {
-      return next(createError(404, 'Rental not found'));
-    }
 
-<<<<<<< HEAD
     // Increment product quantity (assuming it was decremented during rental creation)
     const product = await Product.findById(rental.product);
     if (product) {
@@ -165,7 +154,17 @@ export const updateRental = async (req, res, next) => {
     next(err);
   }
 };
-=======
+export const updateRental = async (req, res, next) => {
+  try {
+    const rentalId = req.params.rentalid;
+    const { returned } = req.body;
+
+    const rental = await Rental.findById(rentalId);
+
+    if (!rental) {
+      return next(createError(404, 'Rental not found'));
+    }
+
     const previousReturnedStatus = rental.returned;
 
     // Update the returned status
@@ -187,4 +186,4 @@ export const updateRental = async (req, res, next) => {
     next(err);
   }
 };
->>>>>>> c81a7bcb2de564fc82f927d74c07111d20608759
+
