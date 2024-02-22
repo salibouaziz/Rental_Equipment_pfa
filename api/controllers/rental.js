@@ -94,6 +94,7 @@ const calculateTotalHours = (from, to) => {
   const timeDiff = toDate - fromDate;
   return timeDiff / (1000 * 60 * 60); // Convert milliseconds to hours
 };
+
 // GET A RENTAL BY ID
 export const getRentalById = async (req, res, next) => {
   try {
@@ -116,7 +117,6 @@ export const getAllRentals = async (req, res, next) => {
     next(err);
   }
 };
-
 export const getAllRentalsByUser = async (req, res, next) => {
   try {
     const userId = req.user._id; // Get the user ID from the request
@@ -135,14 +135,15 @@ export const deleteRentalById = async (req, res, next) => {
 
     // Find the rental by ID
     const rental = await Rental.findById(rentalId);
-
-// Update a rental by ID
-
+    
+    if (!rental) {
+      return next(createError(404, 'Rental not found'));
+    }
 
     // Increment product quantity (assuming it was decremented during rental creation)
     const product = await Product.findById(rental.product);
     if (product) {
-      product.quantity += 1;
+      product.quantityDisponible += 1;
       await product.save();
     }
 
@@ -154,17 +155,16 @@ export const deleteRentalById = async (req, res, next) => {
     next(err);
   }
 };
+// Update a rental by ID
 export const updateRental = async (req, res, next) => {
   try {
     const rentalId = req.params.rentalid;
     const { returned } = req.body;
 
     const rental = await Rental.findById(rentalId);
-
     if (!rental) {
       return next(createError(404, 'Rental not found'));
     }
-
     const previousReturnedStatus = rental.returned;
 
     // Update the returned status
@@ -186,4 +186,3 @@ export const updateRental = async (req, res, next) => {
     next(err);
   }
 };
-

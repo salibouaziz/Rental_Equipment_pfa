@@ -37,8 +37,7 @@ const Login = () => {
       if (isSuccess && isLoggedIn) {
         if (user && user.isAdmin) { // Check if user is admin
           try {
-           
-            
+            await dispatch(logout()).unwrap();
             // Navigate to the admin panel
             window.location.href = 'http://localhost:3002/admin-panel';
           } catch (error) {

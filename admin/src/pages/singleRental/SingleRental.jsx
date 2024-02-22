@@ -96,7 +96,7 @@ const SingleRental = () => {
                   onChange={handleInputChange}
                 >
                   <option value="Yes">Yes</option>
-                  <option value="No">No</option>
+              
                 </select>
                 <button onClick={handleSubmit}>Save</button>
                 <button onClick={handleCancelEdit}>Cancel</button>
