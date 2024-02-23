@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  createRental, getAllRentals, getRentalById, getAllRentalsByUser , deleteRentalById, updateRental
+  createRental, getAllRentals, getRentalById, getAllRentalsByUser , deleteRentalById, updateRental, countRentals
 } from '../controllers/rental.js';
 import { protect, verifyAdmin, verifyUserAdmin } from '../utils/verifyToken.js';
 
@@ -10,8 +10,10 @@ router.post('/:productid', protect, createRental);
 // Update a rental by ID
 router.patch('/:rentalid', protect,verifyAdmin, updateRental);
 // Get a specific rental by ID
+router.get('/count', countRentals); 
 router.get('/:rentalid', getRentalById);
 router.delete('/delete/:rentalid', protect,deleteRentalById);
+router.get('/count', countRentals); 
 // Get all rentals
 router.get('/', getAllRentals);
 

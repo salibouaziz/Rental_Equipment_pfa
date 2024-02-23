@@ -71,3 +71,12 @@ export const getCategories = async (req, res, next) => {
   }
   
 };
+// Count categories
+export const countCategories = async (req, res, next) => {
+  try {
+    const count = await Category.countDocuments();
+    res.status(200).json({ count });
+  } catch (err) {
+    next(err);
+  }
+};

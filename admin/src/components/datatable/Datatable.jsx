@@ -19,9 +19,15 @@ const Datatable = ({columns}) => {
 
   const handleDelete = async (id) => {
     try {
-      // Construct the appropriate URL based on the path
-      const deleteUrl = path === 'users' ? `/${path}/deleteUser/${id}` : `/${path}/${id}`;
-
+      let deleteUrl;
+      if (path === 'users') {
+        deleteUrl = `/${path}/deleteUser/${id}`;
+      } else if (path === 'rental') {
+        deleteUrl = `/rental/delete/${id}`;
+      } else {
+        deleteUrl = `/${path}/${id}`;
+      }
+  
       await axios.delete(deleteUrl);
       
       // Filter out the deleted item from the current list state
@@ -33,6 +39,7 @@ const Datatable = ({columns}) => {
       console.error("Error deleting item:", err);
     }
   };
+  ;
 
 
   const actionColumn = [

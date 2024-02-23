@@ -186,4 +186,13 @@ export const updateRental = async (req, res, next) => {
     next(err);
   }
 };
+// Count crentals
+export const countRentals = async (req, res, next) => {
+  try {
+    const count = await Rental.countDocuments();
+    res.status(200).json({ count });
+  } catch (err) {
+    next(err);
+  }
+};
 

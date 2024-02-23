@@ -51,3 +51,12 @@ export const getUsers = async (req,res,next)=>{
     next(err)
   }
 }
+// Count non-admin users
+export const countUsers = async (req, res, next) => {
+  try {
+    const count = await User.countDocuments({ isAdmin: false });
+    res.status(200).json({ count });
+  } catch (err) {
+    next(err);
+  }
+};

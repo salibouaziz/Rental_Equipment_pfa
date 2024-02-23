@@ -6,6 +6,7 @@ import {
   updateProduct,
   deleteProduct,
   getProductsByCategoryId,
+  countProducts,
 } from '../controllers/product.js';
 import { protect, verifyAdmin } from '../utils/verifyToken.js';
 
@@ -17,6 +18,7 @@ router.post('/', protect,verifyAdmin, createProduct);
 router.patch('/:id', protect, verifyAdmin, updateProduct);
 // Delete a product by ID (admin access only)
 router.delete('/:id', protect, verifyAdmin, deleteProduct);
+router.get('/count', countProducts);
 // Get a specific product by ID
 router.get('/:id', getProductById);
 // Get all products
