@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  createRental, getAllRentals, getRentalById, getAllRentalsByUser , deleteRentalById, updateRental, countRentals
+  createRental, getAllRentals, getRentalById, getAllRentalsByUser , deleteRentalById, updateRental
 } from '../controllers/rental.js';
 import { protect, verifyAdmin, verifyUserAdmin } from '../utils/verifyToken.js';
 
