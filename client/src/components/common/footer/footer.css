@@ -2,7 +2,7 @@
     background-color: rgba(235, 151, 17, 0.865);
     padding: 40px 0;
     color: #fff;
-    margin-top: 140px;
+    
   }
   .footerContact h1 {
     font-size: 35px;
@@ -11,6 +11,7 @@
     background-color:#000;
     padding: 50px 0;
     color: #fff;
+    margin-top: 140px;
   }
   footer .container {
     display: grid;
