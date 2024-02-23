@@ -12,7 +12,7 @@ const SingleRental = () => {
   const { rentalId } = useParams();
   const [rentalData, setRentalData] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [editedReturned, setEditedReturned] = useState("Yes"); // Initialize as "Yes" by default
+  const [editedReturned, setEditedReturned] = useState("No"); // Initialize as "Yes" by default
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -96,6 +96,7 @@ const SingleRental = () => {
                   onChange={handleInputChange}
                 >
                   <option value="Yes">Yes</option>
+                  <option value="No">No</option>
               
                 </select>
                 <button onClick={handleSubmit}>Save</button>
