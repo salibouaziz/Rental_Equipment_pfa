@@ -1,3 +1,6 @@
+import { faMapMarkerAlt, faPhoneAlt, faClock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+
+
 export const nav = [
   {
     text: "home",
@@ -310,15 +313,25 @@ export const price = [
 ]*/
 export const footer = [
   {
-    title: "LAYOUTS",
-    text: [{ list: "Home Page" }, { list: "About Page" }, { list: "Service Page" }, { list: "Property Page" }, { list: "Contact Page" }, { list: "Single Blog" }],
+    title: "Information",
+    text: [
+      { label: "Main Home", path: "/" },
+      { label: "About us", path: "/about" },
+    
+      { label: "Products", path: "/products" },
+      { label: "Categories", path: "/categories" },
+      { label: "Contact", path: "/contact" },
+      { label: "Login", path: "/login" },
+    ],
   },
   {
-    title: "ALL SECTIONS",
-    text: [{ list: "Headers" }, { list: "Features" }, { list: "Attractive" }, { list: "Testimonials" }, { list: "Videos" }, { list: "Footers" }],
+    title: "Contact Info",
+    text: [
+      { label: "Address: 679 Grand avenu, Central Parl, NYC, NY", icon: faMapMarkerAlt },
+      { label: "Custom Support & Sale: +1-5050-607080", icon: faPhoneAlt },
+      { label: "Working Time: Mon-Sat: 9 AM – 5 PM", icon: faClock },
+      { label: "Email: Contact@devia.web", icon: faEnvelope },
+    ],
   },
-  {
-    title: "COMPANY",
-    text: [{ list: "About" }, { list: "Blog" }, { list: "Pricing" }, { list: "Affiliate" }, { list: "Login" }, { list: "Changelog" }],
-  },
+
 ]

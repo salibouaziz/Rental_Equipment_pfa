@@ -22,7 +22,11 @@
     color: rgba(235, 151, 17, 0.865);
   }
   
-
+footer .btn5{
+ background-color: #ffc107;
+ color: #000;
+ font-weight: 700;
+}
   footer h2 {
     font-weight: 500;
   }
@@ -37,11 +41,41 @@
     width: 100%;
     border-radius: 5px;
   }
-  footer h3 {
-    font-weight: 500;
-    margin-bottom: 30px;
+  footer h4 {
+    display: inline-block;
+    padding-bottom: 4px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: #fff;
     font-size: 24px;
-  }
+    font-weight: 700; /* Increase the font weight for a bolder appearance */
+  
+}
+footer a {
+  color: #FFFFFFB3;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease-in-out;
+}
+
+footer a:hover {
+  color: #ffc107; /* Change to your desired hover color */
+}
+footer .icon {
+  color: #ffc107;
+  margin-right: 5px;
+  font-size: 20px;
+}
+footer .box li p {
+  margin: 0;
+  margin-left: 10px;
+}
+footer .box li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
   footer ul {
     display: block;
   }

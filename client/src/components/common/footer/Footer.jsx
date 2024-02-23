@@ -2,7 +2,8 @@ import React from "react";
 import { footer } from "../../data/Data";
 import "./footer.css";
 import { useLocation } from "react-router-dom";
-
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Footer = () => {
   // Get the current location using useLocation hook
   const location = useLocation();
@@ -24,19 +25,7 @@ const Footer = () => {
 
   return (
     <>
-      <section className="footerContact">
-        <div className="container">
-          <div className="send flex">
-            <div className="text">
-              <h1>Do You Have Questions ?</h1>
-              <p>We'll help you to rent anything you want.</p>
-            </div>
-            {/* Button with onClick handler */}
-            <button className="btn5" onClick={handleContactButtonClick}>Contact Us Today</button>
-          </div>
-        </div>
-      </section>
-
+     
       <footer>
         <div className="container">
           <div className="box">
@@ -45,27 +34,35 @@ const Footer = () => {
               <span>UP</span>
               <h2>Do You Need Help With Anything?</h2>
               <p>
-                Receive updates, hot deals, tutorials, discounts sent straight
+                Receive updates,tutorials, discounts sent straight
                 in your inbox every month
               </p>
 
               <div className="input flex">
-                <input type="text" placeholder="Email Address" />
-                <button>Subscribe</button>
+               
+                <button className="btn5" onClick={handleContactButtonClick}>Contact Us Today</button>
+
               </div>
             </div>
           </div>
 
           {/* Mapping through footer data */}
-          {footer.map((val) => (
-            <div className="box" key={val.title}>
-              <h3>{val.title}</h3>
-              <ul>
-                {val.text.map((items, index) => (
-                  <li key={index}> {items.list} </li>
-                ))}
-              </ul>
-            </div>
+          {footer.map((section) => (
+          <div className="box" key={section.title}>
+          <h4>{section.title}</h4>
+          <ul>
+            {section.text.map((item, index) => (
+             <li key={index}>
+             {item.icon && <FontAwesomeIcon icon={item.icon} className="icon" color="#ffc107" />}
+             {item.path ? (
+               <Link to={item.path}>{item.label}</Link>
+             ) : (
+               <p>{item.label}</p>
+             )}
+           </li>
+            ))}
+          </ul>
+        </div>
           ))}
         </div>
       </footer>
