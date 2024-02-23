@@ -186,7 +186,7 @@ export const updateRental = async (req, res, next) => {
     next(err);
   }
 };
-// Count crentals
+// Count rentals
 export const countRentals = async (req, res, next) => {
   try {
     const count = await Rental.countDocuments();
@@ -195,4 +195,5 @@ export const countRentals = async (req, res, next) => {
     next(err);
   }
 };
+
 

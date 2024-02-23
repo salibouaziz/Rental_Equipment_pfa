@@ -10,6 +10,7 @@ router.post('/:productid', protect, createRental);
 // Update a rental by ID
 router.patch('/:rentalid', protect,verifyAdmin, updateRental);
 // Get a specific rental by ID
+//count rental
 router.get('/count', countRentals); 
 router.get('/:rentalid', getRentalById);
 router.delete('/delete/:rentalid', protect,deleteRentalById);
