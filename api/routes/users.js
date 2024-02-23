@@ -1,5 +1,5 @@
 import express from "express";
-import { deleteUser,getUser, getUsers, updatePhoto, updateUser } from "../controllers/user.js";
+import { deleteUser,getUser, getUsers, updatePhoto, updateUser, countUsers } from "../controllers/user.js";
 import { protect, verifyAdmin,verifyUserAdmin } from "../utils/verifyToken.js";
 const router = express.Router();
 
@@ -8,8 +8,10 @@ const router = express.Router();
 router.patch("/updateUser",protect,updateUser);
 //update photo
 router.patch("/updatePhoto",protect,updatePhoto);
+
 //delete
 router.delete("/deleteUser/:userid",protect,verifyUserAdmin,deleteUser);
+router.get('/count', countUsers); 
 //get
 router.get("/getUser/:userid",protect, getUser);
 //get all

@@ -5,44 +5,56 @@
   padding: 10px;
   border-radius: 10px;
   height: 100px;
+}
 
-  .left,
-  .right {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.widget .left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-    .title {
-      font-weight: bold;
-      font-size: 14px;
-      color: rgb(160, 160, 160);
-    }
+.widget .left .title {
+  font-weight: bold;
+  font-size: 14px;
+  color: rgb(160, 160, 160);
+}
 
-    .counter {
-      font-size: 28px;
-      font-weight: 300;
-    }
+.widget .left .link {
+  width: max-content;
+  font-size: 15px;
+  border-bottom: 1px solid gray;
+}
 
-    .link {
-      width: max-content;
-      font-size: 15px;
-      border-bottom: 1px solid gray;
-    }
+.widget .left .link a {
+  color: black;
+  text-decoration: none;
+}
 
-    .link a { /* Adjusted CSS selector */
-      color: black;
-      text-decoration: none;
-    }
-  }
+.widget .center {
+  display: flex;
+  align-items: center;
+}
 
-  .icon {
-    font-size: 18px;
-    padding: 5px;
-    border-radius: 5px;
-    align-self: flex-end;
-  }
+.widget .center .count {
+  font-size: 28px;
+  font-weight: bold;
+  font-style: italic;
+  color: black;
+  
+}
 
-  &:hover {
-    transform: translateY(-2px);
-  }
+.widget .right {
+  display: flex;
+  align-items: flex-end;
+}
+
+.widget .icon {
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 5px;
+  align-self: flex-end;
+}
+
+.widget:hover {
+  transform: translateY(-2px);
 }

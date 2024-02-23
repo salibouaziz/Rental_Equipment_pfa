@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import "./widget.scss";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
@@ -6,10 +7,38 @@ import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined"; // 
 import { Link } from 'react-router-dom';
 
 const Widget = ({ type }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    fetchDataCount();
+  }, [type]);
+
+  const fetchDataCount = async () => {
+    try {
+      let countUrl;
+
+      // Determine the count URL based on the type
+      if (type === 'user') {
+        countUrl = '/users/count';
+      } else {
+        countUrl = `/${type}/count`;
+      }
+
+      const response = await fetch(countUrl);
+      
+      if (response.ok) {
+        const data = await response.json();
+        setCount(data.count);
+      } else {
+        console.error(`Failed to fetch ${type} count`);
+      }
+    } catch (error) {
+      console.error(`Error fetching ${type} count:`, error);
+    }
+  };
+
   let data;
   let shadowColor;
-
-
 
   switch (type) {
     case "user":
@@ -33,7 +62,7 @@ const Widget = ({ type }) => {
       data = {
         title: "RENTALS",
         isMoney: false,
-        link: <Link to="/rentals">View all Rentals</Link>,
+        link: <Link to="/rental">View all Rentals</Link>,
         icon: (
           <LocalOfferOutlinedIcon // Update the icon
             className="icon"
@@ -86,6 +115,9 @@ const Widget = ({ type }) => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="link">{data.link}</span>
+      </div>
+      <div className="center">
+        <span className="count">{count}</span>
       </div>
       <div className="right">
         {data.icon}

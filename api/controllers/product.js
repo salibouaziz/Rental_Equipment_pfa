@@ -145,3 +145,12 @@ export const getProductsByCategoryId = async (req, res, next) => {
     next(err);
   }
 };
+// Count products
+export const countProducts = async (req, res, next) => {
+  try {
+    const count = await Product.countDocuments();
+    res.status(200).json({ count });
+  } catch (err) {
+    next(err);
+  }
+};

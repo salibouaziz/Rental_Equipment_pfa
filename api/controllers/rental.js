@@ -186,3 +186,4 @@ export const updateRental = async (req, res, next) => {
     next(err);
   }
 };
+
