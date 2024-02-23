@@ -32,3 +32,13 @@
     height: auto; /* Added to ensure image responsiveness */
   }
 }
+.about h1{
+  color: rgba(235, 151, 17, 0.865);
+  font-size: 35px;
+  margin-bottom: 5px;
+}
+.about h2{
+  color: rgba(60, 60, 60, 0.865);
+  font-size: 18px;
+  margin-bottom: 5px;
+}

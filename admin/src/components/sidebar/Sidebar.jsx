@@ -14,8 +14,6 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
-
-import authService from '../redux/auth/authService';
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const handleLogout = async () => {
