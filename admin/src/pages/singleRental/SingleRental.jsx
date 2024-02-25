@@ -12,7 +12,8 @@ const SingleRental = () => {
   const { rentalId } = useParams();
   const [rentalData, setRentalData] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [editedReturned, setEditedReturned] = useState("No"); // Initialize as "Yes" by default
+  const [editedReturned, setEditedReturned] = useState("No");
+  const [editedRented, setEditedRented] = useState("No");
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -20,7 +21,8 @@ const SingleRental = () => {
       try {
         const response = await axios.get(`/rental/${rentalId}`);
         setRentalData(response.data);
-        setEditedReturned(response.data.returned ? "Yes" : "No"); // Set the default value based on existing data
+        setEditedReturned(response.data.returned ? "Yes" : "No");
+        setEditedRented(response.data.rented ? "Yes" : "No");
       } catch (error) {
         console.error("Error fetching rental data:", error);
         setError("Error fetching rental data");
@@ -34,8 +36,12 @@ const SingleRental = () => {
   };
 
   const handleInputChange = (e) => {
-    const { value } = e.target;
-    setEditedReturned(value);
+    const { name, value } = e.target;
+    if (name === "returned") {
+      setEditedReturned(value);
+    } else if (name === "rented") {
+      setEditedRented(value);
+    }
   };
 
   const handleCancelEdit = () => {
@@ -44,9 +50,9 @@ const SingleRental = () => {
 
   const handleSubmit = async () => {
     try {
-      // Convert "Yes" and "No" to boolean values for consistency
-      const returned = editedReturned === "Yes" ? true : false;
-      await axios.patch(`/rental/${rentalId}`, { returned });
+      const returned = editedReturned === "Yes";
+      const rented = editedRented === "Yes";
+      await axios.patch(`/rental/${rentalId}`, { returned, rented });
       const response = await axios.get(`/rental/${rentalId}`);
       setRentalData(response.data);
       setEditMode(false);
@@ -75,8 +81,10 @@ const SingleRental = () => {
                       {rentalColumns.map((column) => (
                         <div key={column.field} className="detailItem">
                           <span className="itemKey">{column.headerName}:</span>
-                          {column.field === "returned" ? ( // Handle the special case for "returned" field
+                          {column.field === "returned" ? (
                             <span className="itemValue">{rentalData.returned ? "Yes" : "No"}</span>
+                          ) : column.field === "rented" ? (
+                            <span className="itemValue">{rentalData.rented ? "Yes" : "No"}</span>
                           ) : (
                             <span className="itemValue">{rentalData[column.field]}</span>
                           )}
@@ -90,15 +98,28 @@ const SingleRental = () => {
             )}
             {editMode && (
               <div className="editForm">
-                Returned:
-                <select
-                  value={editedReturned}
-                  onChange={handleInputChange}
-                >
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-              
-                </select>
+                <div className="editFormItem">
+                  Returned:
+                  <select
+                    name="returned"
+                    value={editedReturned}
+                    onChange={handleInputChange}
+                  >
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+                <div className="editFormItem">
+                  Rented:
+                  <select
+                    name="rented"
+                    value={editedRented}
+                    onChange={handleInputChange}
+                  >
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
                 <button onClick={handleSubmit}>Save</button>
                 <button onClick={handleCancelEdit}>Cancel</button>
               </div>

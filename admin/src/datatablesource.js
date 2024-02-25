@@ -98,6 +98,11 @@ export const productColumns = [
     width: 120,
   },
   {
+    field: "currentQuantity",
+    headerName: "Current Quantity",
+    width: 120,
+  },
+  {
     field: "rentPerHour",
     headerName: "Rent Per Hour",
     width: 120,
@@ -142,6 +147,13 @@ export const rentalColumns = [
   {
     field: "returned",
     headerName: "Returned",
+    width: 150,
+    renderCell: (params) => (
+      <span>{params.row.returned ? "Yes" : "No"}</span>
+    ),
+  },{
+    field: "rented",
+    headerName: "Rented",
     width: 150,
     renderCell: (params) => (
       <span>{params.row.returned ? "Yes" : "No"}</span>

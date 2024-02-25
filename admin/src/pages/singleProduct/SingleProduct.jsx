@@ -177,6 +177,14 @@ const SingleProduct = () => {
                   onChange={handleInputChange}
                   placeholder="Quantity Panne"
                 />
+                CurrentQuantity:
+                <input
+                  type="number"
+                  name="currentQuantity"
+                  value={editedProduct.currentQuantity || ""}
+                  onChange={handleInputChange}
+                  placeholder="Current Quantity"
+                />
                 RentPerHour:
                 <input
                   type="number"
