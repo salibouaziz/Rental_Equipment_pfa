@@ -50,17 +50,31 @@ const SingleRental = () => {
 
   const handleSubmit = async () => {
     try {
-      const returned = editedReturned === "Yes";
-      const rented = editedRented === "Yes";
-      await axios.patch(`/rental/${rentalId}`, { returned, rented });
+      // Prepare the updated fields based on the edited values
+      const updatedFields = {};
+      if (editedReturned !== rentalData.returned) {
+        updatedFields.returned = editedReturned === "Yes";
+      }
+      if (editedRented !== rentalData.rented) {
+        updatedFields.rented = editedRented === "Yes";
+      }
+      // If no fields have been changed, return early
+      if (Object.keys(updatedFields).length === 0) {
+        setEditMode(false); // Exit edit mode
+        return;
+      }
+      // Send a patch request to update the rental with the changed fields
+      await axios.patch(`/rental/${rentalId}`, updatedFields);
+      // Update rentalData with the updated data from the server
       const response = await axios.get(`/rental/${rentalId}`);
       setRentalData(response.data);
-      setEditMode(false);
+      setEditMode(false); // Exit edit mode
     } catch (error) {
       console.error("Error updating rental:", error);
       setError("Error updating rental");
     }
   };
+  
 
   return (
     <div className="single">

@@ -151,13 +151,13 @@ export const rentalColumns = [
     renderCell: (params) => (
       <span>{params.row.returned ? "Yes" : "No"}</span>
     ),
-  },{
+  },
+  {
     field: "rented",
     headerName: "Rented",
     width: 150,
     renderCell: (params) => (
-      <span>{params.row.returned ? "Yes" : "No"}</span>
+      <span>{params.row.rented ? "Yes" : "No"}</span>
     ),
   },
- 
 ];
