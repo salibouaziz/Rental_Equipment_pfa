@@ -6,6 +6,7 @@ import usersRouter from "./routes/users.js";
 import productsRouter from "./routes/products.js";
 import categoryRouter from "./routes/categories.js";
 import rentalRouter from './routes/rental.js';
+import notificationRouter from './routes/notifications.js';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from 'path';
@@ -48,6 +49,8 @@ app.use('/images', express.static('images'));
 
 
 app.use("/api/rental", rentalRouter);
+app.use("/api/notifications", notificationRouter);
+
 
 
 

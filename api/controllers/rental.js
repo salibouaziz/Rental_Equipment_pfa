@@ -3,7 +3,7 @@ import Product from '../models/Product.js';
 import createError from '../utils/error.js';
 import User from '../models/User.js';
 import { v4 as uuidv4 } from 'uuid';
-
+import Notification from '../models/Notification.js';
 // CREATE A NEW RENTAL
 export const createRental = async (req, res, next) => {
   try {
@@ -88,6 +88,13 @@ export const createRental = async (req, res, next) => {
     await product.save();
     // Save new rental
     await newRental.save();
+    const newNotification = new Notification({
+      rental: newRental._id,
+      user: "65b624e5b067e991175b8382", // Assuming the admin's user ID is stored in req.user
+      product: productId,
+      message:`Client ${user.username} has rented the product ${product.Title}`,
+    });
+    await newNotification.save();
     res.status(201).json(newRental);
   } catch (err) {
     next(err);
