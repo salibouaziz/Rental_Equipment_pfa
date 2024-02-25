@@ -24,6 +24,7 @@ export const createProduct = async (req, res, next) => {
       return next(createError(400, 'Please fill in all fields '));
     }
     const quantityDisponible = quantityTotal;
+    const currentQuantity = quantityTotal;
     const quantityPanne = 0;
     const newProduct = new Product({
       Title,
@@ -34,6 +35,7 @@ export const createProduct = async (req, res, next) => {
       quantityTotal,
       quantityDisponible,
       quantityPanne,
+      currentQuantity,
       rentPerHour,
       rentPerDay,
     });

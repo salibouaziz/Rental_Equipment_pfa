@@ -79,6 +79,7 @@ export const createRental = async (req, res, next) => {
       totalHours,
       totalAmount,
       returned:false,
+      rented:false,
       transactionId: transactionId
     });
     // Decrement product quantity only if it's greater than 0
@@ -163,16 +164,18 @@ export const deleteRentalById = async (req, res, next) => {
 export const updateRental = async (req, res, next) => {
   try {
     const rentalId = req.params.rentalid;
-    const { returned } = req.body;
+    const { returned, rented } = req.body;
 
     const rental = await Rental.findById(rentalId);
     if (!rental) {
       return next(createError(404, 'Rental not found'));
     }
     const previousReturnedStatus = rental.returned;
+    const previousRentedStatus = rental.rented;
 
     // Update the returned status
     rental.returned = returned;
+    rental.rented = rented;
     await rental.save();
 
     // If the returned status has changed to true, increment quantityDisponible
@@ -181,6 +184,18 @@ export const updateRental = async (req, res, next) => {
       if (!product) {
         return next(createError(404, 'Product not found'));
       }
+      product.currentQuantity += 1;
+    
+      await product.save();
+    }
+    if (!previousRentedStatus && rented) {
+      const product = await Product.findById(rental.product);
+      if (!product) {
+        return next(createError(404, 'Product not found'));
+      }
+      
+      product.currentQuantity -= 1;
+
     
       await product.save();
     }

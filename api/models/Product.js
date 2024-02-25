@@ -33,6 +33,10 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  currentQuantity: {
+    type: Number,
+    default: 0
+  },
   rentPerHour: {
     type: Number,
     required: true,

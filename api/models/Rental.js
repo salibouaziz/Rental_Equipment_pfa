@@ -11,6 +11,10 @@ const bookingSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  rented: {
+    type: Boolean,
+    default: false
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
