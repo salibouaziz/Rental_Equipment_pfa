@@ -51,8 +51,15 @@ export const createRental = async (req, res, next) => {
       ]
     });
     // If the product quantity is 0 and the slot is already booked, return an error
-    if (product.quantityDisponible === 0 && isBooked) {
-      return next(createError(400, 'Product is already booked for the specified time'));
+    const existingRentalsForDate = await Rental.find({
+      product: productId,
+      'bookedTimeSlots.from': { $lt: bookedTimeSlots.to },
+      'bookedTimeSlots.to': { $gt: bookedTimeSlots.from }
+    });
+    
+    // Check if the number of existing rentals exceeds the allowed limit (quantityTotal)
+    if (existingRentalsForDate.length >= product.quantityDisponible) {
+      return next(createError(400, 'Product is fully booked for the specified date'));
     }
     // Calculate total hours
     const totalHours = calculateTotalHours(bookedTimeSlots.from, bookedTimeSlots.to);
@@ -75,9 +82,7 @@ export const createRental = async (req, res, next) => {
       transactionId: transactionId
     });
     // Decrement product quantity only if it's greater than 0
-    if (product.quantityDisponible > 0) {
-      product.quantityDisponible -= 1;
-    }
+ 
     // Save changes to product
     await product.save();
     // Save new rental
@@ -142,10 +147,9 @@ export const deleteRentalById = async (req, res, next) => {
 
     // Increment product quantity (assuming it was decremented during rental creation)
     const product = await Product.findById(rental.product);
-    if (product) {
-      product.quantityDisponible += 1;
+    
       await product.save();
-    }
+    
 
     // Delete the rental
     await Rental.findByIdAndDelete(rentalId);
@@ -155,7 +159,7 @@ export const deleteRentalById = async (req, res, next) => {
     next(err);
   }
 };
-// Update a rental by ID
+
 export const updateRental = async (req, res, next) => {
   try {
     const rentalId = req.params.rentalid;
@@ -177,7 +181,7 @@ export const updateRental = async (req, res, next) => {
       if (!product) {
         return next(createError(404, 'Product not found'));
       }
-      product.quantityDisponible += 1;
+    
       await product.save();
     }
 
