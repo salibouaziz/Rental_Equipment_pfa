@@ -153,10 +153,7 @@ export const deleteRentalById = async (req, res, next) => {
       return next(createError(404, 'Rental not found'));
     }
 
-    // Increment product quantity (assuming it was decremented during rental creation)
-    const product = await Product.findById(rental.product);
-    
-      await product.save();
+   
     
 
     // Delete the rental
