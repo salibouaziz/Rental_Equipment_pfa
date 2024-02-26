@@ -90,7 +90,7 @@ export const createRental = async (req, res, next) => {
     await newRental.save();
     const newNotification = new Notification({
       rental: newRental._id,
-      user: "65b624e5b067e991175b8382", // Assuming the admin's user ID is stored in req.user
+      user: "65b96ec569eae16a5eb5a7e0", // Assuming the admin's user ID is stored in req.user
       product: productId,
       message:`Client ${user.username} has rented the product ${product.Title}`,
     });
