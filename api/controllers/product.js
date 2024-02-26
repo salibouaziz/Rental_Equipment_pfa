@@ -77,7 +77,15 @@ export const updateProduct = async (req, res, next) => {
     if (!isNaN(differenceQuantityPanne)) {
       newQuantityDisponible -= differenceQuantityPanne;
     }
-    
+     // Calculate the new currentQuantity
+     let newCurrentQuantity = existingProduct.currentQuantity || 0;
+     if (!isNaN(differenceQuantityTotal)) {
+       newCurrentQuantity += differenceQuantityTotal;
+     }
+     if (!isNaN(differenceQuantityPanne)) {
+       newCurrentQuantity -= differenceQuantityPanne;
+     }
+     
     // Update other fields except quantityTotal and quantityPanne
     const updatedProduct = await Product.findByIdAndUpdate(
       productId,
@@ -86,7 +94,7 @@ export const updateProduct = async (req, res, next) => {
         quantityPanne: newQuantityPanne,
         quantityTotal: newQuantityTotal,
         quantityDisponible: newQuantityDisponible,
-        currentQuantity: newQuantityDisponible,
+        currentQuantity: newCurrentQuantity,
         category
       },
       { new: true, runValidators: true }

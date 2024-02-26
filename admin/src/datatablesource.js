@@ -135,14 +135,30 @@ export const rentalColumns = [
     ),
   },  
   {
+    field: "from",
+    headerName: "From",
+    width: 250,
+    renderCell: (params) => (
+      <span>{new Date(params.row.bookedTimeSlots.from).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}</span>
+    ),
+  },
+  {
+    field: "to",
+    headerName: "To",
+    width: 250,
+    renderCell: (params) => (
+      <span>{new Date(params.row.bookedTimeSlots.to).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}</span>
+    ),
+  },
+  {
     field: "totalHours",
     headerName: "Total Hours",
-    width: 200,
+    width: 150,
   },
   {
     field: "totalAmount",
     headerName: "Total Amount",
-    width: 200,
+    width: 150,
   },
   {
     field: "returned",
