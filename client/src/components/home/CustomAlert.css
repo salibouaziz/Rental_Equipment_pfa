@@ -1,0 +1,63 @@
+/* CustomAlert.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal {
+    background: linear-gradient(135deg, rgba(235, 151, 17, 0.865), rgba(235, 151, 17, 0.865));
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(255, 126, 95, 0.5);
+    width: 450px;
+    text-align: left;
+    color: #fff;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #fff;
+  }
+  
+  .modal-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .modal-content h2 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  .modal-content p {
+    color: #000000;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 550;
+  }
+  
+  .modal-content button {
+    background-color: #000000;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+  }
+  

@@ -56,10 +56,12 @@ const Cart = () => {
               </td>
               <td >
   <dt className='namedate'>Pickup date:</dt>
-  <dd>{rental.bookedTimeSlots.from}</dd></td>
+  <dd>{new Date(rental.bookedTimeSlots.from).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}</dd>
+</td>
   <td >
   <dt className='namedate'>Return date:</dt>
-  <dd>{rental.bookedTimeSlots.to}</dd></td>
+  <dd>{new Date(rental.bookedTimeSlots.to).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}</dd>
+</td>
 
               <td className='namedate'>{rental.totalAmount}$</td>
               <td>

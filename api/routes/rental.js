@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  createRental, getAllRentals, getRentalById, getAllRentalsByUser , deleteRentalById, updateRental, countRentals
+  createRental, getAllRentals, getRentalById, getAllRentalsByUser , deleteRentalById, updateRental, countRentals,getAllRentalsForAllUsersToday
 } from '../controllers/rental.js';
 import { protect, verifyAdmin, verifyUserAdmin } from '../utils/verifyToken.js';
 
@@ -17,6 +17,7 @@ router.delete('/delete/:rentalid', protect,deleteRentalById);
 router.get('/count', countRentals); 
 // Get all rentals
 router.get('/', getAllRentals);
+router.get('/today/:productid', protect, getAllRentalsForAllUsersToday);
 
 export default router;
 

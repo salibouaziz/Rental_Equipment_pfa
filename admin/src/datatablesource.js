@@ -123,17 +123,26 @@ export const rentalColumns = [
     headerName: "Product",
     width: 250,
     renderCell: (params) => (
-      <span>{params.row.product}</span>
+      <span>{params.row.product ? params.row.product.Title : 'N/A'}</span>
     ),
   },
+  {
+    field: "useremail",
+    headerName: "Email",
+    width: 200,
+    renderCell: (params) => (
+      <span>{params.row.user ? params.row.user.email: 'N/A'}</span>
+    ),
+  }, 
   {
     field: "user",
     headerName: "User",
     width: 200,
     renderCell: (params) => (
-      <span>{params.row.user}</span>
+      <span>{params.row.user ? params.row.user.username : 'N/A'}</span>
     ),
-  },  
+  }, 
+
   {
     field: "from",
     headerName: "From",

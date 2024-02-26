@@ -121,15 +121,24 @@ export const getRentalById = async (req, res, next) => {
     next(err);
   }
 };
-// GET ALL RENTALS
+
 export const getAllRentals = async (req, res, next) => {
   try {
-    const rentals = await Rental.find();
+    const rentals = await Rental.find().populate({
+      path: 'product',
+      model: 'Product',
+    }).populate({
+      path: 'user',
+      model: 'User',
+    });
+    
     res.status(200).json(rentals);
   } catch (err) {
     next(err);
   }
 };
+
+
 export const getAllRentalsByUser = async (req, res, next) => {
   try {
     const userId = req.user._id; // Get the user ID from the request
@@ -219,4 +228,48 @@ export const countRentals = async (req, res, next) => {
   }
 };
 
+export const getAllRentalsForAllUsersToday = async (req, res, next) => {
+  try {
+    const productId = req.params.productid; // Extract product ID from the request parameters
 
+    // Get today's date in the format "2024-02-26T00:00:00+01:00"
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    // Find all rentals for the specified product with today's date within booked time slots
+    const allRentalsToday = await Rental.find({
+      product: productId,
+      $or: [
+        {
+          'bookedTimeSlots.from': { $lte: currentDate },
+          'bookedTimeSlots.to': { $gte: currentDate }
+        },
+        {
+          'bookedTimeSlots.from': { $gte: currentDate, $lt: new Date(new Date(currentDate).getTime() + 24 * 60 * 60 * 1000).toISOString() },
+        },
+        {
+          'bookedTimeSlots.to': currentDate
+        }
+      ],
+      returned: false
+    }).populate('user').populate('product');
+
+    // Organize the rentals by user
+    const rentalsByUser = {};
+
+    allRentalsToday.forEach((rental) => {
+      const userId = rental.user._id.toString();
+
+      // If the user is not in the rentalsByUser object, initialize it
+      if (!rentalsByUser[userId]) {
+        rentalsByUser[userId] = [];
+      }
+
+      // Add the rental to the corresponding user
+      rentalsByUser[userId].push(rental);
+    });
+
+    res.status(200).json(rentalsByUser);
+  } catch (err) {
+    next(err);
+  }
+};
