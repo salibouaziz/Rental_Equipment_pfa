@@ -82,17 +82,26 @@ export const createRental = async (req, res, next) => {
       rented:false,
       transactionId: transactionId
     });
-    // Decrement product quantity only if it's greater than 0
- 
     // Save changes to product
     await product.save();
     // Save new rental
     await newRental.save();
+    const adminUser = await User.findOne({ isAdmin: true });
+    if (!adminUser) {
+      return next(createError(404, 'Admin user not found'));
+    }
+    const creationDate = new Date(newRental.createdAt).toLocaleString('en-US', {
+      month: 'short',
+      day: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      hour12: true,
+    });
     const newNotification = new Notification({
       rental: newRental._id,
-      user: "65b96ec569eae16a5eb5a7e0", // Assuming the admin's user ID is stored in req.user
+      user: adminUser._id , // Assuming the admin's user ID is stored in req.user
       product: productId,
-      message:`Client ${user.username} has rented the product ${product.Title}`,
+      message:`Client ${user.username} has rented the product ${product.Title} on ${creationDate}`,
     });
     await newNotification.save();
     res.status(201).json(newRental);
@@ -156,18 +165,40 @@ export const deleteRentalById = async (req, res, next) => {
     const rentalId = req.params.rentalid;
 
     // Find the rental by ID
-    const rental = await Rental.findById(rentalId);
+    const rental = await Rental.findById(rentalId).populate('user').populate('product');;
     
     if (!rental) {
       return next(createError(404, 'Rental not found'));
     }
-
-   
-    
-
     // Delete the rental
     await Rental.findByIdAndDelete(rentalId);
+    // Check if the user is not an admin and send notification
+    if (!req.user.isAdmin) {
+      // Format the deletion date
+      const deletionDate = new Date().toLocaleString('en-US', {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        hour12: true,
+      });
 
+      // Create a notification for the admin
+      const adminUser = await User.findOne({ isAdmin: true });
+
+      if (!adminUser) {
+        return next(createError(404, 'Admin user not found'));
+      }
+
+      const newNotification = new Notification({
+        rental: rental._id,
+        user: adminUser._id,
+        product: rental.product._id,
+        message: `Client ${rental.user.username} has deleted the rental of the product ${rental.product.Title} on ${deletionDate}`,
+      });
+
+      await newNotification.save();
+    }
     res.status(200).json({ message: 'Rental deleted successfully' });
   } catch (err) {
     next(err);
