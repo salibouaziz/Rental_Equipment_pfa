@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch"
 import axios from "axios";
 
-
+ 
 const Datatable = ({columns}) => {
   const location = useLocation();
   const path = location.pathname.split("/")[1];
@@ -39,18 +39,18 @@ const Datatable = ({columns}) => {
       console.error("Error deleting item:", err);
     }
   };
-  ;
 
+  
 
   const actionColumn = [
     {
       field: "action",
       headerName: "Action",
-      width: 200,
+      width: 300,
       renderCell: (params) => {
         return (
           <div className="cellAction">
-             <Link to={`/${path}/${params.row._id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/${path}/${params.row._id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
             <div
@@ -59,16 +59,22 @@ const Datatable = ({columns}) => {
             >
               Delete
             </div>
+            {path === 'products' && (
+              <Link to={`/${path}/todayRental/${params.row._id}`} style={{ textDecoration: "none" }}>
+              <div className="rentalButton">Rental</div>
+            </Link>
+            )}
           </div>
         );
       },
     },
   ];
+
   return (
     <div className="datatable">
       <div className="datatableTitle">
         {path}
-        {(path !== "users" && path !== "rental") && ( // Render the "Add New" link if path is not "/users"
+        {(path !== "users" && path !== "rental") && (
           <Link to={`/${path}/new`} className="link">
             Add New
           </Link>
@@ -81,9 +87,8 @@ const Datatable = ({columns}) => {
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
-        getRowId={row=>row._id}
+        getRowId={row => row._id}
       />
-      
     </div>
   );
 };

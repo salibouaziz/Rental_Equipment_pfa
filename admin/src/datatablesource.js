@@ -148,7 +148,7 @@ export const rentalColumns = [
     headerName: "From",
     width: 250,
     renderCell: (params) => (
-      <span>{new Date(params.row.bookedTimeSlots.from).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}</span>
+      <span>{params.row.bookedTimeSlots ? new Date(params.row.bookedTimeSlots.from).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) : 'N/A'}</span>
     ),
   },
   {
@@ -156,9 +156,10 @@ export const rentalColumns = [
     headerName: "To",
     width: 250,
     renderCell: (params) => (
-      <span>{new Date(params.row.bookedTimeSlots.to).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}</span>
+      <span>{params.row.bookedTimeSlots ? new Date(params.row.bookedTimeSlots.to).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) : 'N/A'}</span>
     ),
   },
+  
   {
     field: "totalHours",
     headerName: "Total Hours",

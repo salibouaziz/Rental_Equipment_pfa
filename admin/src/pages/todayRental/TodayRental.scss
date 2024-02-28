@@ -1,0 +1,22 @@
+// TodayRental.scss
+
+.today-rental-container {
+    display: flex;
+    height: 100%; 
+  }
+    
+  .today-rental-content {
+    flex: 6; 
+    background-color: #fff; 
+  }
+  
+  .today-rental-just {
+    height: 600px;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px; 
+  }
+  
