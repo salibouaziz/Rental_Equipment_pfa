@@ -2,11 +2,10 @@ import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import useFetch from "../../hooks/useFetch"
+import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
- 
-const Datatable = ({columns}) => {
+const Datatable = ({ columns }) => {
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const [list, setList] = useState([]);
@@ -40,8 +39,24 @@ const Datatable = ({columns}) => {
     }
   };
 
+  const handleImprimer = (id, rented) => {
+    if (rented) {
+      try {
+        // Open the agreement PDF in a new tab
+        window.open(require('./agreement.pdf'), '_blank');
+      } catch (error) {
+        console.error('Error opening agreement PDF:', error);
+      }
+    } else {
+      alert("This item is not rented yet.");
+    }
+  };
   
-
+  
+  
+  
+  
+  
   const actionColumn = [
     {
       field: "action",
@@ -53,16 +68,14 @@ const Datatable = ({columns}) => {
             <Link to={`/${path}/${params.row._id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row._id)}
-            >
-              Delete
-            </div>
+            <div className="deleteButton" onClick={() => handleDelete(params.row._id)}>Delete</div>
+            {path === 'rental' && (
+              <div className="imprimerButton" onClick={() => handleImprimer(params.row._id, params.row.rented)}>Imprimer</div>
+            )}
             {path === 'products' && (
               <Link to={`/${path}/todayRental/${params.row._id}`} style={{ textDecoration: "none" }}>
-              <div className="rentalButton">Rental</div>
-            </Link>
+                <div className="rentalButton">Rental</div>
+              </Link>
             )}
           </div>
         );
