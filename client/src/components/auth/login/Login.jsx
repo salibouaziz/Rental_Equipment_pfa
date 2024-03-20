@@ -61,6 +61,7 @@ const Login = () => {
   
   
   return (
+    <div className="page-background1">
   <div className="center">
    
   <h1>Login</h1>
@@ -92,6 +93,7 @@ const Login = () => {
   </form>
   <div className="signup_link">Don't have account? <Link to="/register">Signup</Link></div>
   
+  </div>
   </div>
  );
 }

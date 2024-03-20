@@ -7,6 +7,7 @@ import {
   deleteProduct,
   getProductsByCategoryId,
   countProducts,
+  searchProductsByName,
 } from '../controllers/product.js';
 import { protect, verifyAdmin } from '../utils/verifyToken.js';
 
@@ -24,7 +25,7 @@ router.get('/:id', getProductById);
 // Get all products
 router.get('/', getProducts);
 router.get('/byCategory/:categoryId', getProductsByCategoryId); // Add this route
-
+router.get('/search/:query', searchProductsByName);
 
 export default router;
 

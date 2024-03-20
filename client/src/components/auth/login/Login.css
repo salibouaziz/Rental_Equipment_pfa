@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap");
 
+.page-background {
+  background-color: #a09f9e;
+}
+
 .center {
   position: absolute;
   top: 50%;
