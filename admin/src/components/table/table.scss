@@ -1,4 +1,10 @@
+.tables-container {
+  display: flex;
+}
+
 .table {
+  margin-right: 20px; // Adjust margin between tables as needed
+
   .cellWrapper {
     display: flex;
     align-items: center;

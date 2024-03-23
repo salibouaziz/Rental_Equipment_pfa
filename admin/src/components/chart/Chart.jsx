@@ -1,3 +1,4 @@
+import React, { useRef, useEffect, useState } from 'react';
 import "./chart.scss";
 import {
   AreaChart,
@@ -17,17 +18,37 @@ const data = [
   { name: "June", Total: 1700 },
 ];
 
-const Chart = ({ aspect, title }) => {
+const Chart = ({ title }) => {
+  const chartRef = useRef(null);
+  const [aspect, setAspect] = useState(() => {
+    const storedAspect = localStorage.getItem('chartAspect');
+    return storedAspect ? parseFloat(storedAspect) : 1;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (chartRef.current) {
+        const containerWidth = chartRef.current.clientWidth;
+        const newAspect = containerWidth / 400;
+        setAspect(newAspect);
+        localStorage.setItem('chartAspect', newAspect.toString());
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div className="chart">
+    <div className="chart" ref={chartRef}>
       <div className="title">{title}</div>
       <ResponsiveContainer width="100%" aspect={aspect}>
-        <AreaChart
-          width={730}
-          height={250}
-          data={data}
-          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-        >
+        <AreaChart data={data}>
           <defs>
             <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />

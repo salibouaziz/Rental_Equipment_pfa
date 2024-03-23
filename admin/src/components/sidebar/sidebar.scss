@@ -32,9 +32,9 @@
       padding: 0;
 
       .title {
-        font-size: 12px;
+        font-size: 16px ,bold;
         font-weight: bold;
-        color: #888;
+        color: #000000;
         margin: 15px 0 5px 0;
         padding-left: 10px;
       }
@@ -42,7 +42,7 @@
       li {
         display: flex;
         align-items: center;
-        padding: 8px;
+        padding: 15px;
         cursor: pointer;
         transition: background-color 0.3s ease;
 
@@ -51,14 +51,14 @@
         }
 
         .icon {
-          font-size: 18px;
+          font-size: 18px,bold;
           color: rgba(235, 151, 17, 0.865);
         }
 
         span {
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 600;
-          color: #888;
+          color: #000000;
           margin-left: 10px;
         }
       }

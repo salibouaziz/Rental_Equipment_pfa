@@ -5,7 +5,7 @@
   .datatableTitle{
     width: 100%;
     font-size: 24px;
-    color: gray;
+    color: rgb(0, 0, 0);
     margin-bottom: 10px;
     display: flex;
     align-items: center;
@@ -64,12 +64,6 @@
       cursor: pointer;
     }
 
-    .imprimerButton {
-      padding: 2px 5px;
-      border-radius: 5px;
-      color: #2c752d;
-      border: 1px dotted #0b370f;
-      cursor: pointer;
-    }
+   
   }
 }

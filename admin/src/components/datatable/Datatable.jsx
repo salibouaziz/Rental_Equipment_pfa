@@ -39,18 +39,7 @@ const Datatable = ({ columns }) => {
     }
   };
 
-  const handleImprimer = (id, rented) => {
-    if (rented) {
-      try {
-        // Open the agreement PDF in a new tab
-        window.open(require('./agreement.pdf'), '_blank');
-      } catch (error) {
-        console.error('Error opening agreement PDF:', error);
-      }
-    } else {
-      alert("This item is not rented yet.");
-    }
-  };
+
   
   
   
@@ -69,9 +58,7 @@ const Datatable = ({ columns }) => {
               <div className="viewButton">View</div>
             </Link>
             <div className="deleteButton" onClick={() => handleDelete(params.row._id)}>Delete</div>
-            {path === 'rental' && (
-              <div className="imprimerButton" onClick={() => handleImprimer(params.row._id, params.row.rented)}>Imprimer</div>
-            )}
+          
             {path === 'products' && (
               <Link to={`/${path}/todayRental/${params.row._id}`} style={{ textDecoration: "none" }}>
                 <div className="rentalButton">Rental</div>

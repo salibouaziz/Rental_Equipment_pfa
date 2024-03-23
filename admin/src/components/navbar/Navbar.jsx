@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./navbar.scss";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
+
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from "react-router-dom";
@@ -30,6 +30,7 @@ const Navbar = () => {
       console.error('Error fetching notifications:', error);
     }
   };
+  
 
   const markAsRead = async (id) => {
     try {
@@ -60,10 +61,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="wrapper">
         <div className="items">
-          <div className="item">
-            <LanguageOutlinedIcon className="icon" />
-            English
-          </div>
+          
           <div className="item">
             <DarkModeOutlinedIcon
               className="icon"
@@ -87,10 +85,7 @@ const Navbar = () => {
               ))}
             </div>
           </div>
-          <div className="item">
-            <ChatBubbleOutlineOutlinedIcon className="icon" />
-            <div className="counter">2</div>
-          </div>
+          
           {/* Dropdown menu */}
           <div className="item" onClick={toggleDropdown}>
             <ListOutlinedIcon className="icon" />
