@@ -1,3 +1,4 @@
+import React, { useRef, useEffect, useState } from 'react';
 import "./chart.scss";
 import {
   AreaChart,
@@ -8,26 +9,55 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  { name: "January", Total: 1200 },
-  { name: "February", Total: 2100 },
-  { name: "March", Total: 800 },
-  { name: "April", Total: 1600 },
-  { name: "May", Total: 900 },
-  { name: "June", Total: 1700 },
-];
+const Chart = ({ title }) => {
+  const chartRef = useRef(null);
+  const [aspect, setAspect] = useState(() => {
+    const storedAspect = localStorage.getItem('chartAspect');
+    return storedAspect ? parseFloat(storedAspect) : 1;
+  });
+  const [chartData, setChartData] = useState([]);
 
-const Chart = ({ aspect, title }) => {
+  useEffect(() => {
+    const fetchDataForLast6Days = async () => {
+      try {
+        const response = await fetch('/rental/count-rentals-last-6-days');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        setChartData(Object.entries(data).map(([date, total]) => ({ name: date, Total: total })));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchDataForLast6Days();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (chartRef.current) {
+        const containerWidth = chartRef.current.clientWidth;
+        const newAspect = containerWidth / 400;
+        setAspect(newAspect);
+        localStorage.setItem('chartAspect', newAspect.toString());
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div className="chart">
+    <div className="chart" ref={chartRef}>
       <div className="title">{title}</div>
       <ResponsiveContainer width="100%" aspect={aspect}>
-        <AreaChart
-          width={730}
-          height={250}
-          data={data}
-          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-        >
+        <AreaChart data={chartData}>
           <defs>
             <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />

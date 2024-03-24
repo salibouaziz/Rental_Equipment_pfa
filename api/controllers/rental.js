@@ -306,3 +306,34 @@ export const getAllRentalsForAllUsersToday = async (req, res, next) => {
   }
 };
 
+
+
+// Count rentals for the last 6 days
+export const countRentalsLast6Days = async (req, res, next) => {
+  try {
+    const counts = {};
+    const today = new Date();
+
+    // Loop through the last 6 days
+    for (let i = 5; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+
+      // Find rentals for the current date
+      const count = await Rental.countDocuments({
+        createdAt: {
+          $gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()), // Start of the day
+          $lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1) // End of the day
+        }
+      });
+
+      // Store the count for the current date
+      counts[date.toLocaleDateString('en-US')] = count;
+    }
+
+    res.status(200).json(counts);
+  } catch (err) {
+    next(err);
+  }
+};
+

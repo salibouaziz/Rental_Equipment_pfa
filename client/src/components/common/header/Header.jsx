@@ -102,7 +102,8 @@ const fetchSearchResults = async (query) => {
   }
 };
   
-// Function to toggle search input and results
+// Function to toggle search input and result
+
 const toggleSearch = () => {
   // Toggle search input
   setIsSearchOpen(!isSearchOpen);
