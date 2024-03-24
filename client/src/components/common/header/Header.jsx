@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { BsCart3, BsSearch } from "react-icons/bs"
+import { BsCart3} from "react-icons/bs"
 import { BiUser } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
 
@@ -20,7 +20,6 @@ const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const [showCartEmptyMessage, setShowCartEmptyMessage] = useState(false); // State to control the visibility of the cart empty message
-
 
   useEffect(() => {
     // Set username from user object if available
@@ -68,7 +67,10 @@ const Header = () => {
   
   }, [user]);
   // Function to handle search input change
-  // Function to handle search input change
+  const handleSearchResultClick = () => {
+    // Close the search results when a search result item is clicked
+    setSearchResults([]);
+  };
 const handleSearchInputChange = async (event) => {
   const query = event.target.value;
   setSearchQuery(query);
@@ -89,10 +91,34 @@ const handleSearchInputChange = async (event) => {
 
   console.log('Search query:', searchQuery); // Log the search query
   console.log('Search results:', searchResults); // Log the search results
+// Function to fetch search results based on query
+const fetchSearchResults = async (query) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/api/products/search/${query}`);
+    setSearchResults(response.data);
+  } catch (error) {
+    console.error('Error fetching search results:', error);
+    setSearchResults([]);
+  }
+};
   
-  const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
-  };
+// Function to toggle search input and results
+const toggleSearch = () => {
+  // Toggle search input
+  setIsSearchOpen(!isSearchOpen);
+  // If search input is being opened, set search results
+  if (!isSearchOpen) {
+    setSearchResults(previousSearchResults => {
+      if (previousSearchResults.length === 0) {
+        // Fetch search results only if it's empty
+        fetchSearchResults(searchQuery);
+      }
+      return previousSearchResults;
+    });
+  }
+  handleSearchResultClick();
+};
+
 
   const handleCartClick = () => {
     if (cartCount === 0) {
@@ -145,14 +171,15 @@ const handleSearchInputChange = async (event) => {
             <div className="icon-container" onClick={toggleSearch}>
               <FiSearch size={25} />
                <ul className="search-results">
-    {searchResults.map(product => (
-      <li key={product._id} className="search-result-item">
-        <img src={product.image} alt={product.Title} className="product-image123" />
-        <Link to={`/viewproduct/${product._id}`}>
-        <span className="product-name123">{product.Title}</span>
-            </Link> 
-      </li>
-    ))}
+               {searchResults.map(product => (
+  <li key={product._id} className="search-result-item" onClick={handleSearchResultClick}>
+    <Link to={`/viewproduct/${product._id}`}>
+      <img src={product.image} alt={product.Title} className="product-image123" />
+      <span className="product-name123">{product.Title}</span>
+    </Link>
+  </li>
+))}
+
   </ul>
             </div>
         

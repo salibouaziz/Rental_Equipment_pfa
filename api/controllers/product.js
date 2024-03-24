@@ -1,7 +1,7 @@
 import Product from '../models/Product.js';
 import Category from '../models/Category.js';
 import createError from '../utils/error.js';
-
+import Rental from '../models/Rental.js';
 // Create a new product
 export const createProduct = async (req, res, next) => {
   console.log('Request Body:', req.body);
@@ -183,6 +183,51 @@ export const searchProductsByName = async (req, res, next) => {
     });
 
     res.status(200).json(products);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+
+
+
+
+
+
+export const getRentalCountsForProducts = async (req, res, next) => {
+  try {
+    // Find products with rentalCount different from 0
+    const products = await Product.find({ rentalCount: { $ne: 0 } });
+
+    // Create an object to store rental counts for each product
+    const rentalCounts = {};
+
+    // Iterate over each product
+    for (const product of products) {
+      // Find rentals for the current product
+      const rentals = await Rental.find({ product: product._id });
+
+      // Count the number of rentals for the current product
+      const rentalCount = rentals.length;
+
+      // Add the rental count to the rentalCounts object
+      rentalCounts[product._id] = rentalCount;
+    }
+
+    // Filter out products with rental count 0
+    const filteredProducts = products.filter(product => rentalCounts[product._id] !== 0);
+
+    // Sort filtered products by rental count in descending order
+    filteredProducts.sort((a, b) => rentalCounts[b._id] - rentalCounts[a._id]);
+
+    // Attach the rental counts to each product object
+    const productsWithRentalCounts = filteredProducts.map(product => ({
+      ...product.toObject(),
+      rentalCount: rentalCounts[product._id] || 0
+    }));
+
+    res.status(200).json(productsWithRentalCounts);
   } catch (err) {
     next(err);
   }

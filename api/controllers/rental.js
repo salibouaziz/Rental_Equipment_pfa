@@ -83,6 +83,7 @@ export const createRental = async (req, res, next) => {
       transactionId: transactionId
     });
     // Save changes to product
+    product.rentalCount += 1;
     await product.save();
     // Save new rental
     await newRental.save();
@@ -304,3 +305,4 @@ export const getAllRentalsForAllUsersToday = async (req, res, next) => {
     next(err);
   }
 };
+

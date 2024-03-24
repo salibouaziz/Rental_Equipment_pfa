@@ -8,6 +8,9 @@ import {
   getProductsByCategoryId,
   countProducts,
   searchProductsByName,
+  getRentalCountsForProducts,
+
+
 } from '../controllers/product.js';
 import { protect, verifyAdmin } from '../utils/verifyToken.js';
 
@@ -26,6 +29,7 @@ router.get('/:id', getProductById);
 router.get('/', getProducts);
 router.get('/byCategory/:categoryId', getProductsByCategoryId); // Add this route
 router.get('/search/:query', searchProductsByName);
+router.get('/sortedbyrentals/:id',  getRentalCountsForProducts);
 
 export default router;
 

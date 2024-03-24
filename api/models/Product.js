@@ -45,6 +45,10 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  rentalCount: {
+    type: Number,
+    default: 0
+  }
 }, { timestamps: true });
 
 export default mongoose.model("Product", ProductSchema);
