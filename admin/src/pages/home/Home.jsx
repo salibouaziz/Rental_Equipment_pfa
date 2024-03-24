@@ -18,10 +18,10 @@ const Home = () => {
           <Widget type="products" />
         </div>
         <div className="charts" >
-          <Chart title="Last 6 days (Revenue)" aspect={2 / 1} />
+          <Chart title="Last 6 days (Rentals)" aspect={2 / 1} />
         </div>
         <div className="listContainer">
-          <div className="listTitle">Latest Transactions</div>
+          <div className="listTitle"></div>
           <Table />
         </div>
       </div>

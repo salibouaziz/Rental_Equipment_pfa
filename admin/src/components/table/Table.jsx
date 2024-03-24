@@ -61,7 +61,6 @@ const List = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell className="tableCell">Product ID</TableCell>
               <TableCell className="tableCell">Product Name</TableCell>
               <TableCell className="tableCell">quantityTotal</TableCell>
               <TableCell className="tableCell">Rental Count</TableCell>
@@ -70,7 +69,6 @@ const List = () => {
           <TableBody>
             {rows.map((row) => (
               <TableRow key={row._id}>
-                <TableCell className="tableCell">{row._id}</TableCell>
                 <TableCell className="tableCell">
                     <div className="cellWrapper">
                       <img src={row.image} alt="" className="image" />
@@ -91,7 +89,6 @@ const List = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell className="tableCell">Rental ID</TableCell>
               <TableCell className="tableCell">Product</TableCell>
               <TableCell className="tableCell">Email</TableCell>
               <TableCell className="tableCell">DateReturn</TableCell>
@@ -101,7 +98,6 @@ const List = () => {
           <TableBody>
             {overdueRentals.map((rental) => (
               <TableRow key={rental._id}>
-                <TableCell className="tableCell">{rental._id}</TableCell>
                 <TableCell className="tableCell">
                     <div className="cellWrapper">
                       <img src={rental.product.image} alt="" className="image" />
