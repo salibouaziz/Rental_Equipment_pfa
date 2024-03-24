@@ -11,7 +11,7 @@
     justify-content: center;
 
     .logo {
-      font-size: 20px;
+      font-size: 30px;
       font-weight: bold;
       color: rgba(235, 151, 17, 0.865);
     }
@@ -32,9 +32,9 @@
       padding: 0;
 
       .title {
-        font-size: 16px ,bold;
+        font-size: 25px ,bold;
         font-weight: bold;
-        color: #000000;
+        color:#4d4c4c;
         margin: 15px 0 5px 0;
         padding-left: 10px;
       }
@@ -51,14 +51,14 @@
         }
 
         .icon {
-          font-size: 18px,bold;
-          color: rgba(235, 151, 17, 0.865);
+          font-size: 22px,bold;
+          color: rgb(255, 157, 0);
         }
 
         span {
-          font-size: 16px;
+          font-size: 20px;
           font-weight: 600;
-          color: #000000;
+          color: #4d4c4c;
           margin-left: 10px;
         }
       }
@@ -74,7 +74,7 @@
       width: 20px;
       height: 20px;
       border-radius: 5px;
-      border: 1px solid rgba(235, 151, 17, 0.865);
+      border: 1px solid rgb(252, 155, 0);
       cursor: pointer;
       margin-right: 5px;
 
