@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const {ObjetcId} = mongoose.Schema;
+const {ObjectId} = mongoose.Schema;
 import bcrypt from "bcryptjs";
 
 const UserSchema = new mongoose.Schema({
@@ -27,10 +27,6 @@ const UserSchema = new mongoose.Schema({
   phone: {
     type: String, 
     default:"+216"
-  },
-  address: {
-    type: Object,
-    //adress, state, country
   },
   isAdmin:{
     type: Boolean,

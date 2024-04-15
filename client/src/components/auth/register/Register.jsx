@@ -9,10 +9,11 @@ const initialState ={
   username:"",
   email:"",
   password:"",
+  phone:"",
 };
 const Register = () => {
   const [formData,setFormData] = useState(initialState);
-  const {username,email,password} = formData;
+  const {username,email,password,phone} = formData;
   const {isLoggedIn,isSuccess} = useSelector((state)=>state.auth);
 
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const Register = () => {
   const registerUser = async(e)=>{
     //prevent the form from reloading
     e.preventDefault();
-    if(!username||!email || !password){
+    if(!username||!email || !password ||!phone){
       return toast.error( "All fields are required", {
         position: "bottom-left"
       });
@@ -44,6 +45,7 @@ const Register = () => {
       username,
       email,
       password,
+      phone,
     }
     //this is a redux now we will bring in a dispatch variable
     await dispatch(register(userData));
@@ -89,6 +91,18 @@ const Register = () => {
           value={password}
           name="password"
           placeholder="password"
+          onChange={handleInputChange}
+          className="rInput"
+        />
+         <span></span>
+        </div>
+        <div className="txxt_field">
+        <input
+          type="text"
+          id="phone"
+          value={phone}
+          name="phone"
+          placeholder="phone"
           onChange={handleInputChange}
           className="rInput"
         />

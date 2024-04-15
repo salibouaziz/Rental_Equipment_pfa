@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link} from 'react-router-dom';
+import { toast } from "react-toastify";
 
 import './Cart.css'
 const Cart = () => {
@@ -20,15 +21,29 @@ const Cart = () => {
 
     fetchUserRentals();
   }, []);
-  const handleDelete = async (rentalId) => {
-    try {
-      // Make a request to delete the rental by ID
-      await axios.delete(`http://localhost:3001/api/rental/delete/${rentalId}`);
+  const handleDelete = async (rentalId, from) => {
+    // Get the current system date
+    const currentDate = new Date();
 
-      // Update the UI after successful deletion
-      setUserRentals((prevRentals) => prevRentals.filter((rental) => rental._id !== rentalId));
-    } catch (error) {
-      console.error('Error deleting rental:', error);
+    // Parse the rental start date
+    const rentalStartDate = new Date(from);
+
+    // Check if the current date is less than the rental start date
+    if (currentDate < rentalStartDate) {
+      try {
+        // Make a request to delete the rental by ID
+        await axios.delete(`http://localhost:3001/api/rental/delete/${rentalId}`);
+
+        // Update the UI after successful deletion
+        setUserRentals((prevRentals) => prevRentals.filter((rental) => rental._id !== rentalId));
+      } catch (error) {
+        console.error('Error deleting rental:', error);
+      }
+    } else {
+      // If the current date is not less than the rental start date, inform the user
+      return toast.error( "You cannot delete this rental because it has already started.", {
+        position: "bottom-left"
+      });
     }
   };
   return (
@@ -40,7 +55,7 @@ const Cart = () => {
           {userRentals.map((rental) => (
             <tr key={rental._id} className='rental-separator'> 
              <td>
-              <button  className="delete-button" onClick={() => handleDelete(rental._id)}>X</button>
+              <button  className="delete-button" onClick={() => handleDelete(rental._id, rental.bookedTimeSlots.from)}>X</button>
             </td>
               <td>
                 <img
@@ -66,9 +81,6 @@ const Cart = () => {
               <td className='namedate'>{rental.totalAmount}$</td>
               <td>
             
-              <Link to={`/checkout/${rental._id}`} className="checkout-button">
-              Checkout
-           </Link>
             </td>  
             </tr>
           ))}

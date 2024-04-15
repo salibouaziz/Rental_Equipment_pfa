@@ -1,77 +1,60 @@
 /* Categories.css */
 
 .categories-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
   
   .categories-heading {
     text-align: center;
-    font-size: 60px;
     margin-top: 50px;
+    font-size: 60px;
     margin-bottom: 50px;
-    color: #333; /* Adjust color as needed */
+    color: #333;
   }
   
   .categories-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
     list-style: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
   }
   
   .category-item {
-    width: 250px; /* Set a fixed width for each category item */
-    height: 250px; /* Set a fixed height for each category item */
-    border: 1px solid #ccc; /* Adjust border color as needed */
-    border-radius: 10px;
-    transition: transform 0.2s;
-    overflow: hidden;
-    /* background: #fff; */ /* Remove or comment out this line */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced box shadow */
+    width: calc(33.33% - 20px);
+    margin-right: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  }
+  .category-details{
     text-align: center;
+    margin-bottom: 10px;
   }
-  
-  .category-item:hover {
-    transform: translateY(-5px) scale(1.05); /* Slight lift and scale on hover */
-  }
-  
-  .category-image {
+  .category-image{
     width: 100%;
-    height: 150px; /* Adjust the height as needed */
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
   }
-  
-  .category-content {
-    padding: 20px;
-  }
-  
-  .category-name {
-   
+  .category-name{
     font-size: 18px;
-    color: #333; /* Adjust text color as needed */
-    margin-top: 10px; /* Add margin for better spacing */
+    margin-top: 10px;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
   }
-  
-  /* Additional styling for a more vibrant look */
-  
-  .categories-container {
-    /* background-color: #f5f5f5; */ /* Remove or comment out this line */
-    max-width: 1000px;
-    margin: 0 auto;
+  .category-item:hover .category-name {
+    opacity: 0; 
   }
-  
-  .categories-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    list-style: none;
-    padding: 0;
+  .category-item:hover .category-image {
+    transform: scale(1.05);
   }
-  

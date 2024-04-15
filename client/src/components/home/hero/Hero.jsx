@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <>
     <div className='hero'>
-        <Heading title='RENT NOW' subtitle='Find your construction machines and more!' />
+        <Heading title='RENT NOW' />
     </div>
     </>
   )

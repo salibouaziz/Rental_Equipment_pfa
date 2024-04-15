@@ -1,20 +1,16 @@
 .hero {
-  background-image: url("../../../../public/images/banner.jpg");
+  background-image: url("../../../../public/images/background1.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  height: 90vh;
+  height: 100vh;
   width: 100%;
   padding-top: 15%;
 }
 .hero h1 {
-  color: #000;
-  font-size: 60px;
-}
-.hero p {
-  color: #000;
-  opacity: 0.9;
-  font-size: 20px;
+  margin-top: 90px;
+  color: #fb7d1d;
+  font-size: 80px;
 }
 @media screen and (max-width: 800px) {
   .hero{
