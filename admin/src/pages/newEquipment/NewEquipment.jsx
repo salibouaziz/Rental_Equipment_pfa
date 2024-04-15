@@ -140,6 +140,8 @@ const NewEquipment = () => {
             </form>
             {/* Conditionally render the toast */}
             {showToast && <div className="toast">Your equipment has been created</div>}
+            {error && <div className="error">{error}</div>}
+
           </div>
         </div>
       </div>

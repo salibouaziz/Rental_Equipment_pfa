@@ -27,13 +27,7 @@ export const userInputs = [
       label: "Password",
       type: "password",
     },
-    {
-      id: 5,
-      name:"address",
-      label: "Address",
-      type: "text",
-      placeholder: "Enter your Address",
-    },
+  
  
   ];
   

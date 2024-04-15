@@ -24,11 +24,6 @@ export const userColumns = [
     headerName: "Phone",
     width: 180,
   },
-  {
-    field: "address",
-    headerName: "Address",
-    width: 200,
-  },
   
  
 ];

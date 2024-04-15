@@ -16,6 +16,12 @@ export const createProduct = async (req, res, next) => {
       rentPerDay,
     } = req.body;
     
+    // Check if a product with the same title already exists
+    const existingProduct = await Product.findOne({ Title });
+    if (existingProduct) {
+      return next(createError(400, 'Product with title already exists'));
+    }
+
     const existingCategory = await Category.findOne({ name: categoryName });
     if (!existingCategory) {
       return next(createError(404, 'Category not found'));
